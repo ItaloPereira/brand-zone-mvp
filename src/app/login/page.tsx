@@ -1,9 +1,18 @@
+import { SignInButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { LogInIcon } from "lucide-react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
-const LoginPage = () => {
+const LoginPage = async () => {
+  const { userId } = await auth();
+
+  if (userId) {
+    redirect("/");
+  }
+
   return (
     <main className="grid grid-cols-2 h-full">
       <div className="flex flex-col gap-8 h-full justify-center max-w-[600px] mx-auto px-10">
@@ -12,10 +21,12 @@ const LoginPage = () => {
           <h1 className="text-4xl font-bold">Welcome</h1>
           <p className="text-muted-foreground">Brand Zone is the branding platform set to boost marketing management and creativity</p>
         </div>
-        <Button variant="outline">
-          <LogInIcon />
-          Sign in or create account
-        </Button>
+        <SignInButton>
+          <Button variant="outline">
+            <LogInIcon />
+            Sign in or create account
+          </Button>
+        </SignInButton>
       </div>
       <div className="bg-amber-300 px-20 overflow-hidden">
         <div className="relative h-full w-full">
