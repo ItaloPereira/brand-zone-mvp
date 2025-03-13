@@ -5,7 +5,6 @@ import { Mulish } from "next/font/google";
 
 
 const mulish = Mulish({
-  variable: "--font-mulish",
   subsets: ["latin"],
 });
 
@@ -22,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${mulish.variable} antialiased`}
+        className={`${mulish.className} antialiased dark`}
       >
         {children}
       </body>
