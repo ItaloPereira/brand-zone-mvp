@@ -30,7 +30,14 @@ const LoginPage = async () => {
       </div>
       <div className="bg-amber-300 px-20 overflow-hidden">
         <div className="relative h-full w-full">
-          <Image src="/login.png" alt="Photo montage" fill className="object-contain animate-[spin_90s_linear_infinite]" />
+          <Image
+            src="/login.png"
+            alt="Photo montage"
+            className="object-contain animate-[spin_90s_linear_infinite]"
+            sizes="(max-width: 768px) 100vw, 173px"
+            fill
+            priority
+          />
         </div>
       </div>
     </main>
