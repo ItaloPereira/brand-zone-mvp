@@ -25,7 +25,7 @@ const ImageCardList = ({ image }: ImageCardListProps) => {
 
       <div className="flex-grow min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <h2 className="text-md font-medium truncate">{image.name}</h2>
+          <h2 className="text-md font-medium line-clamp-1">{image.name}</h2>
           {image.group && (
             <Badge
               className="max-w-32 truncate bg-white text-black"

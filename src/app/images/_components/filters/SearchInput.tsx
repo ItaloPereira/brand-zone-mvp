@@ -37,11 +37,11 @@ const SearchInput = () => {
     <div className="relative w-[250px]">
       <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
       <Input
-        placeholder="Search images..."
+        placeholder="Search by image name"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="pl-8 dark:bg-black"
+        className="pl-8 dark:bg-background"
       />
     </div>
   );

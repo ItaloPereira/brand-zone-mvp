@@ -34,7 +34,7 @@ const ImageCardListDetail = ({ image }: ImageCardListDetailProps) => {
       <div className="flex-grow min-w-0 flex flex-col">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-xl font-medium mb-2">{image.name}</h2>
+            <h2 className="text-xl font-medium mb-2 line-clamp-1">{image.name}</h2>
 
             <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
               <div className="flex items-center gap-1">

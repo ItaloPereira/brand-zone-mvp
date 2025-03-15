@@ -4,8 +4,8 @@ import { X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
+import { formatAppliedFilters } from "@/utils/images/filters";
 
-import { formatAppliedFilters } from "../../_utils/filters";
 import type { ImageFilters } from "../../types";
 
 interface AppliedFiltersProps {

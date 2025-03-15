@@ -1,10 +1,8 @@
 import type { Group, Tag } from "@prisma/client";
-import { PlusIcon } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 
 import { ImageView } from "../constants";
 import type { ImageFilters, ImageItem } from "../types";
+import AddImageButton from "./AddImageButton";
 import AppliedFilters from "./filters/AppliedFilters";
 import ClearFiltersButton from "./filters/ClearFiltersButton";
 import GroupSelect from "./filters/GroupSelect";
@@ -33,14 +31,11 @@ const ImagesModule = ({
     <div className="flex flex-col gap-6">
       <section className="px-8 py-6 flex justify-between items-center w-full">
         <h1 className="text-3xl font-bold">Images</h1>
-        <Button>
-          <PlusIcon />
-          Add image
-        </Button>
+        <AddImageButton availableGroups={availableGroups} availableTags={availableTags} />
       </section>
 
       <section className="px-8 py-2 flex flex-col gap-4">
-        <div className="flex justify-between items-center w-full">
+        <div className="flex justify-between items-center w-full flex-wrap gap-4">
           <div className="flex items-center gap-2">
             <GroupSelect availableGroups={availableGroups} />
             <TagsSelect availableTags={availableTags} />

@@ -1,11 +1,28 @@
 import { Group, Tag } from "@prisma/client";
 
-import { ImageGroupView, ImageView } from "../constants";
-import type { ImageFilters } from "../types";
+import { ImageGroupView, ImageView } from "@/app/images/constants";
+import type { ImageFilters } from "@/app/images/types";
 
-interface GetFiltersOptions {
+export interface GetFiltersOptions {
   availableGroups?: Group[];
   availableTags?: Tag[];
+}
+
+export interface ImageSearchParams {
+  groupId?: string;
+  tagIds?: string[];
+  keyword?: string;
+}
+
+export interface ImageViewParams {
+  view: ImageView;
+  groupView: ImageGroupView;
+}
+
+export interface GetImagesProps {
+  groupId?: string;
+  tagIds?: string[];
+  keyword?: string;
 }
 
 export const getFilters = (
@@ -82,4 +99,4 @@ export const formatAppliedFilters = (filters: ImageFilters) => {
   }
 
   return appliedFilters;
-}; 
+};
