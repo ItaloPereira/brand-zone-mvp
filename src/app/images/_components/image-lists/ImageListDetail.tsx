@@ -12,7 +12,7 @@ const ImageListDetail = ({ images, groupView }: ImageListDetailProps) => {
   if (!images.length) {
     return (
       <p className="text-muted-foreground text-center px-8 py-6">
-        No results found. Add your first image to get started.
+        No results found.
       </p>
     );
   }

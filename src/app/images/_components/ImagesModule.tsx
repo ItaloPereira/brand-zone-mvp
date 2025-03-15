@@ -1,9 +1,15 @@
+import type { Group, Tag } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-import { ImageGroupView, ImageView } from "../constants";
-import type { ImageItem } from "../types";
+import { ImageView } from "../constants";
+import type { ImageFilters, ImageItem } from "../types";
+import AppliedFilters from "./filters/AppliedFilters";
+import ClearFiltersButton from "./filters/ClearFiltersButton";
+import GroupSelect from "./filters/GroupSelect";
+import SearchInput from "./filters/SearchInput";
+import TagsSelect from "./filters/TagsSelect";
 import ToggleGroupView from "./filters/ToggleGroup";
 import ToggleView from "./filters/ToggleView";
 import ImageGrid from "./image-lists/ImageGrid";
@@ -12,29 +18,19 @@ import ImageListDetail from "./image-lists/ImageListDetail";
 
 interface ImagesModuleProps {
   images: ImageItem[];
-  view: ImageView;
-  groupView: ImageGroupView;
+  filters: ImageFilters;
+  availableGroups: Group[];
+  availableTags: Tag[];
 }
 
-const ImagesModule = ({ images, view, groupView }: ImagesModuleProps) => {
-  const renderList = () => {
-    switch (view) {
-      case ImageView.GRID:
-        return <ImageGrid images={images} groupView={groupView} />;
-
-      case ImageView.LIST:
-        return <ImageList images={images} groupView={groupView} />;
-
-      case ImageView.DETAILS:
-        return <ImageListDetail images={images} groupView={groupView} />;
-
-      default:
-        return <ImageGrid images={images} groupView={groupView} />;
-    }
-  }
-
+const ImagesModule = ({
+  images,
+  filters,
+  availableGroups,
+  availableTags,
+}: ImagesModuleProps) => {
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <section className="px-8 py-6 flex justify-between items-center w-full">
         <h1 className="text-3xl font-bold">Images</h1>
         <Button>
@@ -43,19 +39,34 @@ const ImagesModule = ({ images, view, groupView }: ImagesModuleProps) => {
         </Button>
       </section>
 
-      <section className="px-8 py-4 flex justify-between items-center w-full">
-        <div className="flex items-center gap-4">
-          Filters
+      <section className="px-8 py-2 flex flex-col gap-4">
+        <div className="flex justify-between items-center w-full">
+          <div className="flex items-center gap-2">
+            <GroupSelect availableGroups={availableGroups} />
+            <TagsSelect availableTags={availableTags} />
+            <SearchInput />
+            <ClearFiltersButton />
+          </div>
+
+          <div className="flex gap-4">
+            <ToggleGroupView defaultValue={filters.groupView} />
+            <ToggleView defaultValue={filters.view} />
+          </div>
         </div>
 
-        <div className="flex gap-4">
-          <ToggleGroupView defaultValue={groupView} />
-          <ToggleView defaultValue={view} />
-        </div>
+        <AppliedFilters filters={filters} />
       </section>
 
-      {renderList()}
-    </>
+      {filters.view === ImageView.GRID && (
+        <ImageGrid images={images} groupView={filters.groupView} />
+      )}
+      {filters.view === ImageView.LIST && (
+        <ImageList images={images} groupView={filters.groupView} />
+      )}
+      {filters.view === ImageView.DETAILS && (
+        <ImageListDetail images={images} groupView={filters.groupView} />
+      )}
+    </div>
   );
 }
 

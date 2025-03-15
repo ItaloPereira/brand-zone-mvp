@@ -1,33 +1,35 @@
 import { getImages } from "@/data/images";
+import { getGroups, getTags } from "@/data/shared";
 
 import ImagesModule from "./_components/ImagesModule";
-import { ImageGroupView, ImageView } from "./constants";
+import { getFilters } from "./_utils/filters";
 
 interface ImagesPageProps {
-  searchParams: {
-    view?: string;
-    groupView?: string;
-  };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 const ImagesPage = async ({ searchParams }: ImagesPageProps) => {
-  const viewParam = searchParams.view;
-  const groupViewParam = searchParams.groupView;
+  const availableGroups = await getGroups();
+  const availableTags = await getTags();
 
-  const isValidView = Object.values(ImageView).includes(viewParam as ImageView);
-  const view = isValidView ? viewParam as ImageView : ImageView.GRID;
+  const filters = getFilters(searchParams, {
+    availableGroups,
+    availableTags,
+  });
 
-  const isValidGroupView = Object.values(ImageGroupView).includes(groupViewParam as ImageGroupView);
-  const groupView = isValidGroupView ? groupViewParam as ImageGroupView : ImageGroupView.SINGLE;
-
-  const images = await getImages();
+  const images = await getImages({
+    groupId: filters.search.groupId,
+    tagIds: filters.search.tagIds,
+    keyword: filters.search.keyword,
+  });
 
   return (
     <main>
       <ImagesModule
         images={images}
-        view={view}
-        groupView={groupView}
+        filters={filters}
+        availableGroups={availableGroups}
+        availableTags={availableTags}
       />
     </main>
   );
