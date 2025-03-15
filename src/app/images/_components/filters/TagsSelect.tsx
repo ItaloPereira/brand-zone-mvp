@@ -12,7 +12,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "@/components/ui/command";
 import {
   Popover,
@@ -74,37 +73,38 @@ const TagsSelect = () => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[250px] p-0">
-        <Command>
-          <CommandInput placeholder="Search tags..." />
-          <CommandList>
-            <CommandEmpty>No tags found.</CommandEmpty>
-            <CommandGroup>
-              {availableTags.map((tag) => (
-                <CommandItem
-                  key={tag.id}
-                  value={tag.name}
-                  onSelect={() => handleSelect(tag.id)}
-                >
-                  <Check className={cn(
-                    "mr-2 h-4 w-4",
-                    selectedTagIds.includes(tag.id) ? "opacity-100" : "opacity-0"
-                  )} />
-                  {tag.name}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-            <CommandSeparator />
-            <div className="flex items-center gap-2 p-2">
-              <Button
-                size="sm"
-                className="flex-1"
-                onClick={handleApply}
-              >
-                Apply
-              </Button>
-            </div>
-          </CommandList>
-        </Command>
+        <div className="flex flex-col">
+          <Command className="flex-1 overflow-hidden">
+            <CommandInput placeholder="Search tags..." />
+            <CommandList className="max-h-[calc(300px-80px)] overflow-auto">
+              <CommandEmpty>No tags found.</CommandEmpty>
+              <CommandGroup>
+                {availableTags.map((tag) => (
+                  <CommandItem
+                    key={tag.id}
+                    value={tag.name}
+                    onSelect={() => handleSelect(tag.id)}
+                  >
+                    <Check className={cn(
+                      "mr-2 h-4 w-4",
+                      selectedTagIds.includes(tag.id) ? "opacity-100" : "opacity-0"
+                    )} />
+                    {tag.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+          <div className="border-t p-2 bg-popover sticky bottom-0">
+            <Button
+              size="sm"
+              className="w-full"
+              onClick={handleApply}
+            >
+              Apply
+            </Button>
+          </div>
+        </div>
       </PopoverContent>
     </Popover>
   );

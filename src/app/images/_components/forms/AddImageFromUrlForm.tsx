@@ -2,32 +2,22 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Group, Tag } from "@prisma/client";
-import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import NextImage from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { createImage } from "@/actions/create-image";
+import { GroupSelector, type GroupValue } from "@/components/GroupSelector";
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { TagSelector, type TagValue } from "@/components/TagSelector";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
+
+import { useImages } from "../../context/ImagesContext";
 
 const formSchema = z.object({
   url: z.string().trim().min(1, { message: "URL is required" }).max(1024, { message: "URL is too long" }).url({ message: "Invalid URL" }),
@@ -47,23 +37,20 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-interface AddImageFormProps {
-  availableGroups: Group[];
-  availableTags: Tag[];
+interface AddImageFromUrlFormProps {
   dialogOpen: boolean;
   setDialogOpen: (open: boolean) => void;
 }
 
-const AddImageForm = ({ availableGroups, availableTags, dialogOpen, setDialogOpen }: AddImageFormProps) => {
+const AddImageFromUrlForm = ({ dialogOpen, setDialogOpen }: AddImageFromUrlFormProps) => {
+  const { availableGroups, availableTags } = useImages();
+
   const [clientGroups, setClientGroups] = useState<Group[]>(availableGroups);
   const [clientTags, setClientTags] = useState<Tag[]>(availableTags);
   const [imagePreview, setImagePreview] = useState<{
     url: string;
     status: "loading" | "error" | "success";
   } | null>(null);
-  const [groupInputValue, setGroupInputValue] = useState("");
-  const [tagInputValue, setTagInputValue] = useState("");
-
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -179,32 +166,6 @@ const AddImageForm = ({ availableGroups, availableTags, dialogOpen, setDialogOpe
     }
   };
 
-  const handleAddNewGroup = useCallback((name: string) => {
-    const tempId = `temp_${Date.now()}`;
-    const newGroup = {
-      id: tempId,
-      name,
-      userId: "",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    setClientGroups(prev => [...prev, newGroup]);
-    return newGroup;
-  }, []);
-
-  const handleAddNewTag = useCallback((name: string) => {
-    const tempId = `temp_${Date.now()}`;
-    const newTag = {
-      id: tempId,
-      name,
-      userId: "",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    setClientTags(prev => [...prev, newTag]);
-    return newTag;
-  }, []);
-
   useEffect(() => {
     if (!dialogOpen) {
       resetForm();
@@ -264,81 +225,14 @@ const AddImageForm = ({ availableGroups, availableTags, dialogOpen, setDialogOpe
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Group</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-full justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? field.value.name
-                            : "Select group"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0" style={{ width: 'var(--radix-popper-anchor-width)' }} align="start">
-                      <Command className="w-full">
-                        <CommandInput
-                          placeholder="Search group..."
-                          onValueChange={setGroupInputValue}
-                          value={groupInputValue}
-                        />
-                        <CommandList>
-                          <CommandEmpty className="py-0">
-                            <Button
-                              variant="ghost"
-                              className="justify-start w-full px-2"
-                              onClick={() => {
-                                const value = groupInputValue.trim();
-                                if (value) {
-                                  const newGroup = handleAddNewGroup(value);
-                                  field.onChange({
-                                    id: newGroup.id,
-                                    name: value,
-                                    isNew: true,
-                                  });
-                                  setGroupInputValue("");
-                                }
-                              }}
-                            >
-                              Add &quot;{groupInputValue.trim()}&quot;
-                            </Button>
-                          </CommandEmpty>
-                          <CommandGroup>
-                            {clientGroups.map((group) => (
-                              <CommandItem
-                                value={group.name}
-                                key={group.id}
-                                onSelect={() => {
-                                  field.onChange({
-                                    id: group.id,
-                                    name: group.name,
-                                    isNew: group.id.startsWith('temp_'),
-                                  });
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    field.value?.id === group.id
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {group.name}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
+                  <FormControl>
+                    <GroupSelector
+                      value={field.value as GroupValue}
+                      onChange={field.onChange}
+                      availableGroups={clientGroups}
+                      setAvailableGroups={setClientGroups}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -386,92 +280,14 @@ const AddImageForm = ({ availableGroups, availableTags, dialogOpen, setDialogOpe
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tags</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-full justify-between",
-                        !field.value?.length && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value?.length
-                        ? `${field.value.length} tag${field.value.length === 1 ? "" : "s"} selected`
-                        : "Select tags"}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="p-0" style={{ width: 'var(--radix-popper-anchor-width)' }} align="start">
-                  <Command className="w-full">
-                    <CommandInput
-                      placeholder="Search tags..."
-                      onValueChange={setTagInputValue}
-                      value={tagInputValue}
-                    />
-                    <CommandList>
-                      <CommandEmpty className="py-0">
-                        <Button
-                          variant="ghost"
-                          className="justify-start w-full px-2 py-1.5"
-                          onClick={() => {
-                            const value = tagInputValue.trim();
-                            if (value) {
-                              const newTag = handleAddNewTag(value);
-                              field.onChange([
-                                ...field.value,
-                                {
-                                  id: newTag.id,
-                                  name: value,
-                                  isNew: true,
-                                }
-                              ]);
-                              setTagInputValue("");
-                            }
-                          }}
-                        >
-                          Add &quot;{tagInputValue.trim()}&quot;
-                        </Button>
-                      </CommandEmpty>
-                      <CommandGroup>
-                        {clientTags.map((tag) => (
-                          <CommandItem
-                            value={tag.name}
-                            key={tag.id}
-                            onSelect={() => {
-                              const isSelected = field.value.some(t => t.id === tag.id);
-                              if (isSelected) {
-                                field.onChange(field.value.filter(t => t.id !== tag.id));
-                              } else {
-                                field.onChange([
-                                  ...field.value,
-                                  {
-                                    id: tag.id,
-                                    name: tag.name,
-                                    isNew: tag.id.startsWith('temp_'),
-                                  }
-                                ]);
-                              }
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                field.value.some(t => t.id === tag.id)
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {tag.name}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+              <FormControl>
+                <TagSelector
+                  value={field.value as TagValue[]}
+                  onChange={field.onChange}
+                  availableTags={clientTags}
+                  setAvailableTags={setClientTags}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -516,4 +332,4 @@ const AddImageForm = ({ availableGroups, availableTags, dialogOpen, setDialogOpe
   );
 }
 
-export default AddImageForm;
+export default AddImageFromUrlForm;

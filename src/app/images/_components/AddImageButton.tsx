@@ -1,6 +1,7 @@
 "use client";
 
-import { PlusIcon, Sparkles, Upload } from "lucide-react";
+import { Link2, PlusIcon, Sparkles, Upload } from "lucide-react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,11 +10,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import AddImageFromUrlTriger from "./dialogs/AddImageFromUrlTriger";
+import { DialogType } from "../constants";
+import AddImageDialogTrigger from "./AddImageDialogTrigger";
 
 const AddImageButton = () => {
+  const [popoverOpen, setPopoverOpen] = useState(false);
+
   return (
-    <Popover>
+    <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger asChild>
         <Button>
           <PlusIcon />
@@ -23,24 +27,30 @@ const AddImageButton = () => {
 
       <PopoverContent className="bg-muted px-0" align="end">
         <div className="flex flex-col">
-          <AddImageFromUrlTriger />
+          <AddImageDialogTrigger
+            dialogTitle="Upload image from URL"
+            buttonLabel="URL"
+            buttonIcon={<Link2 />}
+            type={DialogType.URL}
+            setPopoverOpen={setPopoverOpen}
+          />
 
-          <Button
-            variant="ghost"
-            className="hover:bg-neutral-700 justify-start rounded-none has-[>svg]:px-5 font-normal"
-          >
-            <Upload />
-            Upload
-          </Button>
-          <Button
-            variant="ghost"
-            className="hover:bg-neutral-700 justify-start rounded-none has-[>svg]:px-5 font-normal group"
-          >
-            <Sparkles className="text-purple-500" />
-            <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 bg-clip-text text-transparent">
-              Generate
-            </span>
-          </Button>
+          <AddImageDialogTrigger
+            dialogTitle="Upload image"
+            buttonLabel="Upload"
+            buttonIcon={<Upload />}
+            type={DialogType.UPLOAD}
+            setPopoverOpen={setPopoverOpen}
+          />
+
+          <AddImageDialogTrigger
+            dialogTitle="Generate image"
+            buttonLabel="Generate"
+            buttonIcon={<Sparkles className="text-purple-500" />}
+            buttonLabelClassName="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 bg-clip-text text-transparent"
+            type={DialogType.GENERATE}
+            setPopoverOpen={setPopoverOpen}
+          />
         </div>
       </PopoverContent>
     </Popover>
