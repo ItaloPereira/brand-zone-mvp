@@ -10,11 +10,11 @@ import { z } from "zod";
 
 import { createImage } from "@/actions/create-image";
 import { GroupSelector, type GroupValue } from "@/components/GroupSelector";
+import { TagSelector, type TagValue } from "@/components/TagSelector";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { TagSelector, type TagValue } from "@/components/TagSelector";
 import { Textarea } from "@/components/ui/textarea";
 
 import { useImages } from "../../context/ImagesContext";

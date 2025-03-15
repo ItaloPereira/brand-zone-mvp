@@ -168,6 +168,11 @@ const AddImageFromGeneratorForm = ({ dialogOpen, setDialogOpen }: AddImageFromGe
           {/* Step 1: Prompt Input */}
           <Form {...promptForm}>
             <form onSubmit={promptForm.handleSubmit(handleGenerateImage)} className="space-y-4">
+              <div className="p-3 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-700 text-sm mb-4">
+                <p className="font-medium">⚠️ Experimental Feature</p>
+                <p>This image generation feature is experimental. Generated images will expire after a period of time.</p>
+              </div>
+
               <FormField
                 control={promptForm.control}
                 name="prompt"

@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 
 import { DialogType } from "../constants";
 import AddImageFromGeneratorForm from "./forms/AddImageFromGeneratorForm";
+import AddImageFromUploadForm from "./forms/AddImageFromUploadForm";
 import AddImageFromUrlForm from "./forms/AddImageFromUrlForm";
 
 interface AddImageDialogTriggerProps {
@@ -40,8 +41,7 @@ const AddImageDialogTrigger = ({
       case DialogType.URL:
         return <AddImageFromUrlForm dialogOpen={dialogOpen} setDialogOpen={handleDialogOpenChange} />;
       case DialogType.UPLOAD:
-        // return <AddImageFromUploadForm dialogOpen={dialogOpen} setDialogOpen={handleDialogOpenChange} />;
-        return <AddImageFromUrlForm dialogOpen={dialogOpen} setDialogOpen={handleDialogOpenChange} />;
+        return <AddImageFromUploadForm dialogOpen={dialogOpen} setDialogOpen={handleDialogOpenChange} />;
       case DialogType.GENERATE:
         return <AddImageFromGeneratorForm dialogOpen={dialogOpen} setDialogOpen={handleDialogOpenChange} />;
       default:
