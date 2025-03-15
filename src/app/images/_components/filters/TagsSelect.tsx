@@ -1,6 +1,5 @@
 "use client";
 
-import type { Tag } from "@prisma/client";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,11 +21,10 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-interface TagsSelectProps {
-  availableTags: Tag[];
-}
+import { useImages } from "../../context/ImagesContext";
 
-const TagsSelect = ({ availableTags }: TagsSelectProps) => {
+const TagsSelect = () => {
+  const { availableTags } = useImages();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);

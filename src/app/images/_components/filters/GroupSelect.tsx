@@ -1,6 +1,5 @@
 "use client";
 
-import type { Group } from "@prisma/client";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -21,11 +20,10 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-interface GroupSelectProps {
-  availableGroups: Group[];
-}
+import { useImages } from "../../context/ImagesContext";
 
-const GroupSelect = ({ availableGroups }: GroupSelectProps) => {
+const GroupSelect = () => {
+  const { availableGroups } = useImages();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);

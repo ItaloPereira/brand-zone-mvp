@@ -1,6 +1,7 @@
 import type { Group, Tag } from "@prisma/client";
 
 import { ImageView } from "../constants";
+import { ImagesProvider } from "../context/ImagesContext";
 import type { ImageFilters, ImageItem } from "../types";
 import AddImageButton from "./AddImageButton";
 import AppliedFilters from "./filters/AppliedFilters";
@@ -28,40 +29,42 @@ const ImagesModule = ({
   availableTags,
 }: ImagesModuleProps) => {
   return (
-    <div className="flex flex-col gap-6">
-      <section className="px-8 py-6 flex justify-between items-center w-full">
-        <h1 className="text-3xl font-bold">Images</h1>
-        <AddImageButton availableGroups={availableGroups} availableTags={availableTags} />
-      </section>
+    <ImagesProvider availableGroups={availableGroups} availableTags={availableTags}>
+      <div className="flex flex-col gap-6">
+        <section className="px-8 py-6 flex justify-between items-center w-full">
+          <h1 className="text-3xl font-bold">Images</h1>
+          <AddImageButton />
+        </section>
 
-      <section className="px-8 py-2 flex flex-col gap-4">
-        <div className="flex justify-between items-center w-full flex-wrap gap-4">
-          <div className="flex items-center gap-2">
-            <GroupSelect availableGroups={availableGroups} />
-            <TagsSelect availableTags={availableTags} />
-            <SearchInput />
-            <ClearFiltersButton />
+        <section className="px-8 py-2 flex flex-col gap-4">
+          <div className="flex justify-between items-center w-full flex-wrap gap-4">
+            <div className="flex items-center gap-2">
+              <GroupSelect />
+              <TagsSelect />
+              <SearchInput />
+              <ClearFiltersButton />
+            </div>
+
+            <div className="flex gap-4">
+              <ToggleGroupView defaultValue={filters.groupView} />
+              <ToggleView defaultValue={filters.view} />
+            </div>
           </div>
 
-          <div className="flex gap-4">
-            <ToggleGroupView defaultValue={filters.groupView} />
-            <ToggleView defaultValue={filters.view} />
-          </div>
-        </div>
+          <AppliedFilters filters={filters} />
+        </section>
 
-        <AppliedFilters filters={filters} />
-      </section>
-
-      {filters.view === ImageView.GRID && (
-        <ImageGrid images={images} groupView={filters.groupView} />
-      )}
-      {filters.view === ImageView.LIST && (
-        <ImageList images={images} groupView={filters.groupView} />
-      )}
-      {filters.view === ImageView.DETAILS && (
-        <ImageListDetail images={images} groupView={filters.groupView} />
-      )}
-    </div>
+        {filters.view === ImageView.GRID && (
+          <ImageGrid images={images} groupView={filters.groupView} />
+        )}
+        {filters.view === ImageView.LIST && (
+          <ImageList images={images} groupView={filters.groupView} />
+        )}
+        {filters.view === ImageView.DETAILS && (
+          <ImageListDetail images={images} groupView={filters.groupView} />
+        )}
+      </div>
+    </ImagesProvider>
   );
 }
 
