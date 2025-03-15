@@ -5,6 +5,8 @@ import { dark } from "@clerk/themes";
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
 
+import Header from "@/components/Header";
+
 const mulish = Mulish({
   subsets: ["latin"],
 });
@@ -27,6 +29,7 @@ export default function RootLayout({
         <ClerkProvider appearance={{
           baseTheme: dark
         }}>
+          <Header />
           {children}
         </ClerkProvider>
       </body>

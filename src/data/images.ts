@@ -23,6 +23,9 @@ export const getImages = async () => {
         },
         group: true,
       },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
 
     return images;

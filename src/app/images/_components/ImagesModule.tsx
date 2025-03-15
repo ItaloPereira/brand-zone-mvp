@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 
 import { ImageGroupView, ImageView } from "../constants";
 import type { ImageItem } from "../types";
+import ToggleGroupView from "./filters/ToggleGroup";
+import ToggleView from "./filters/ToggleView";
 import ImageGrid from "./image-lists/ImageGrid";
 import ImageList from "./image-lists/ImageList";
 import ImageListDetail from "./image-lists/ImageListDetail";
-import ToggleGroupView from "./ToggleGroup";
-import ToggleView from "./ToggleView";
 
 interface ImagesModuleProps {
   images: ImageItem[];
@@ -44,7 +44,10 @@ const ImagesModule = ({ images, view, groupView }: ImagesModuleProps) => {
       </section>
 
       <section className="px-8 py-4 flex justify-between items-center w-full">
-        <p>FILTERS</p>
+        <div className="flex items-center gap-4">
+          Filters
+        </div>
+
         <div className="flex gap-4">
           <ToggleGroupView defaultValue={groupView} />
           <ToggleView defaultValue={view} />

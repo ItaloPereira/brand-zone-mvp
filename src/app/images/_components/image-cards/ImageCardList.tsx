@@ -28,7 +28,7 @@ const ImageCardList = ({ image }: ImageCardListProps) => {
           <h2 className="text-md font-medium truncate">{image.name}</h2>
           {image.group && (
             <Badge
-              className="max-w-32 truncate bg-amber-800  text-amber-100"
+              className="max-w-32 truncate bg-white text-black"
               title={image.group.name}
             >
               {image.group.name}

@@ -101,7 +101,7 @@ const ImageCardListDetail = ({ image }: ImageCardListDetailProps) => {
               {image.group && (
                 <Badge
                   variant="secondary"
-                  className="px-2 py-0.5 bg-amber-800 text-amber-100"
+                  className="px-2 py-0.5  bg-white text-black"
                 >
                   {image.group.name}
                 </Badge>
@@ -110,7 +110,7 @@ const ImageCardListDetail = ({ image }: ImageCardListDetailProps) => {
                 <Badge
                   key={tagItem.id}
                   variant="outline"
-                  className="px-2 py-0.5 border-purple-500/50 text-purple-200 hover:bg-purple-500/20"
+                  className="px-2 py-0.5 border-green-500/50 text-green-200"
                 >
                   {tagItem.tag.name}
                 </Badge>

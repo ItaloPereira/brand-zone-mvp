@@ -77,7 +77,7 @@ const ImageGridCard = ({ image }: ImageGridCardProps) => {
           <div className="absolute top-2 right-2 bottom-2 flex flex-col gap-2 items-end justify-between">
             {image.group && (
               <Badge
-                className="max-w-32 truncate bg-amber-800 text-amber-100"
+                className="max-w-32 truncate bg-white text-black"
                 title={image.group.name}
               >
                 {image.group.name}
@@ -89,7 +89,7 @@ const ImageGridCard = ({ image }: ImageGridCardProps) => {
                   <Button
                     size="icon"
                     aria-label="More options"
-                    className="mt-auto"
+                    className="mt-auto bg-white text-black hover:bg-white/80"
                     onMouseEnter={() => setOpenComments(true)}
                     onMouseLeave={() => setOpenComments(false)}
                   >

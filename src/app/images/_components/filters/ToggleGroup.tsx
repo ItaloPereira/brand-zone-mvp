@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-import { ImageGroupView } from "../constants";
+import { ImageGroupView } from "../../constants";
 
 interface ToggleViewProps {
   defaultValue: ImageGroupView;
