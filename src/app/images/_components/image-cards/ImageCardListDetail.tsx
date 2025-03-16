@@ -1,13 +1,13 @@
 'use client';
 
-import { Calendar, Download, Eye, Hash, Pencil, Tag, Trash } from "lucide-react";
+import { Calendar, Hash, Tag } from "lucide-react";
 import Image from "next/image";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import type { ImageItem } from "../../types";
+import { ImageActionButtonGroup } from "../actions/ImageActionButtonGroup";
 
 interface ImageCardListDetailProps {
   image: ImageItem;
@@ -52,44 +52,7 @@ const ImageCardListDetail = ({ image }: ImageCardListDetailProps) => {
             )}
           </div>
 
-          <div className="flex items-start gap-2 flex-shrink-0">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hover:bg-neutral-600"
-              title="View"
-              aria-label="View"
-            >
-              <Eye className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hover:bg-neutral-600"
-              title="Download"
-              aria-label="Download"
-            >
-              <Download className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hover:bg-neutral-600"
-              title="Edit"
-              aria-label="Edit"
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hover:bg-neutral-600"
-              title="Delete"
-              aria-label="Delete"
-            >
-              <Trash className="h-4 w-4" />
-            </Button>
-          </div>
+          <ImageActionButtonGroup className="flex items-start gap-2 flex-shrink-0" image={image} />
         </div>
 
         <Separator className="my-4 bg-muted-foreground/50 mt-auto" />

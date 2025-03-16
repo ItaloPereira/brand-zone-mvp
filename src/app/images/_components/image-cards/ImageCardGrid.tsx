@@ -1,6 +1,6 @@
 'use client';
 
-import { Download, EllipsisVertical, Eye, MessageCircleMore, Pencil, Trash } from "lucide-react";
+import { MessageCircleMore } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import type { ImageItem } from "../../types";
+import { ImageActionsPopover } from "../actions/ImageActionsPopover";
 
 interface ImageGridCardProps {
   image: ImageItem;
@@ -24,52 +25,7 @@ const ImageGridCard = ({ image }: ImageGridCardProps) => {
     >
       <div className="flex justify-between items-center py-2">
         <h2 className="text-md line-clamp-1 font-medium">{image.name}</h2>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="ghost"
-              className="hover:bg-neutral-600"
-              size="icon"
-              title="More options"
-              aria-label="More options"
-            >
-              <EllipsisVertical />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="bg-muted px-0" align="start">
-            <div className="flex flex-col">
-              <Button
-                variant="ghost"
-                className="hover:bg-neutral-700 justify-start rounded-none has-[>svg]:px-5 font-normal"
-              >
-                <Eye />
-                View
-              </Button>
-              <Button
-                variant="ghost"
-                className="hover:bg-neutral-700 justify-start rounded-none has-[>svg]:px-5 font-normal"
-              >
-                <Download />
-                Download
-              </Button>
-              <Button
-                variant="ghost"
-                className="hover:bg-neutral-700 justify-start rounded-none has-[>svg]:px-5 font-normal"
-              >
-                <Pencil />
-                Edit
-              </Button>
-              <Button
-                variant="ghost"
-                className="hover:bg-neutral-700 justify-start rounded-none has-[>svg]:px-5 font-normal"
-              >
-                <Trash />
-                Delete
-              </Button>
-            </div>
-          </PopoverContent>
-        </Popover>
-
+        <ImageActionsPopover image={image} />
       </div>
       <div className="relative h-full rounded-xs overflow-hidden">
         <Image src={image.src} alt={image.name} fill className="object-cover" />

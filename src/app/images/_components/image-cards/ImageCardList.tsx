@@ -1,12 +1,11 @@
 'use client';
 
-import { Download, Eye, Pencil, Trash } from "lucide-react";
 import Image from "next/image";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 import type { ImageItem } from "../../types";
+import { ImageActionButtonGroup } from "../actions/ImageActionButtonGroup";
 
 interface ImageCardListProps {
   image: ImageItem;
@@ -41,44 +40,7 @@ const ImageCardList = ({ image }: ImageCardListProps) => {
         )}
       </div>
 
-      <div className="flex items-center gap-2 flex-shrink-0">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="hover:bg-neutral-600"
-          title="View"
-          aria-label="View"
-        >
-          <Eye className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="hover:bg-neutral-600"
-          title="Download"
-          aria-label="Download"
-        >
-          <Download className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="hover:bg-neutral-600"
-          title="Edit"
-          aria-label="Edit"
-        >
-          <Pencil className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="hover:bg-neutral-600"
-          title="Delete"
-          aria-label="Delete"
-        >
-          <Trash className="h-4 w-4" />
-        </Button>
-      </div>
+      <ImageActionButtonGroup image={image} />
     </div>
   );
 }
