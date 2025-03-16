@@ -21,7 +21,6 @@ export const DownloadButton = ({
     try {
       setIsDownloading(true);
 
-      // Tenta fazer o download diretamente
       try {
         const response = await fetch(image.src, {
           method: 'GET',
@@ -39,11 +38,8 @@ export const DownloadButton = ({
         }
       } catch (directError) {
         console.warn("Direct download failed, trying alternative method:", directError);
-        // Continua para o método alternativo
       }
 
-      // Se o download direto falhar, tenta usar uma abordagem alternativa
-      // Opção 1: Para imagens do Cloudinary, podemos tentar uma URL alternativa
       if (image.src.includes('cloudinary.com')) {
         const cloudinaryUrl = getCloudinaryFallbackUrl(image.src);
         try {
@@ -58,7 +54,6 @@ export const DownloadButton = ({
         }
       }
 
-      // Opção 2: Usar o proxy do servidor
       try {
         const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(image.src)}`;
         const response = await fetch(proxyUrl);
@@ -74,8 +69,6 @@ export const DownloadButton = ({
         console.warn("Proxy download failed:", proxyError);
       }
 
-      // Opção 3: Usar o método de link direto como último recurso
-      // Isso não funcionará para imagens com proteção CORS, mas pode funcionar para algumas
       const link = document.createElement('a');
       link.href = image.src;
       link.download = `${image.name || 'image'}.${getFileExtension(image.src)}`;
@@ -95,7 +88,6 @@ export const DownloadButton = ({
     }
   };
 
-  // Função para salvar o arquivo após obter o blob
   const saveFile = async (blob: Blob) => {
     const blobUrl = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -111,10 +103,7 @@ export const DownloadButton = ({
     toast.success(`${image.name || 'Image'} downloaded successfully`);
   };
 
-  // Tenta obter uma URL alternativa para imagens do Cloudinary
   const getCloudinaryFallbackUrl = (url: string): string => {
-    // Exemplo: transformar https://res.cloudinary.com/demo/image/upload/v1234/sample.jpg
-    // em https://res.cloudinary.com/demo/image/upload/fl_attachment/v1234/sample.jpg
     try {
       const urlParts = url.split('/upload/');
       if (urlParts.length === 2) {
