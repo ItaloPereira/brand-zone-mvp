@@ -106,7 +106,7 @@ export const GroupSelector = ({
                 }}
               >
                 {availableGroups.length === 0 && !inputValue.trim()
-                  ? "Add your first group"
+                  ? "Add your first group typing above"
                   : `Add "${inputValue.trim()}"`}
               </Button>
             </CommandEmpty>

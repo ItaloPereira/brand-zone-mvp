@@ -21,30 +21,72 @@ export const DownloadButton = ({
     try {
       setIsDownloading(true);
 
-      // Fetch the image as a blob
-      const response = await fetch(image.src);
+      // Tenta fazer o download diretamente
+      try {
+        const response = await fetch(image.src, {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'no-cache',
+          headers: {
+            'Accept': 'image/*'
+          }
+        });
 
-      if (!response.ok) {
-        throw new Error(`Failed to download image: ${response.statusText}`);
+        if (response.ok) {
+          const blob = await response.blob();
+          await saveFile(blob);
+          return;
+        }
+      } catch (directError) {
+        console.warn("Direct download failed, trying alternative method:", directError);
+        // Continua para o método alternativo
       }
 
-      const blob = await response.blob();
+      // Se o download direto falhar, tenta usar uma abordagem alternativa
+      // Opção 1: Para imagens do Cloudinary, podemos tentar uma URL alternativa
+      if (image.src.includes('cloudinary.com')) {
+        const cloudinaryUrl = getCloudinaryFallbackUrl(image.src);
+        try {
+          const response = await fetch(cloudinaryUrl);
+          if (response.ok) {
+            const blob = await response.blob();
+            await saveFile(blob);
+            return;
+          }
+        } catch (cloudinaryError) {
+          console.warn("Cloudinary fallback failed:", cloudinaryError);
+        }
+      }
 
-      // Create a blob URL and trigger download
-      const blobUrl = URL.createObjectURL(blob);
+      // Opção 2: Usar o proxy do servidor
+      try {
+        const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(image.src)}`;
+        const response = await fetch(proxyUrl);
+
+        if (response.ok) {
+          const blob = await response.blob();
+          await saveFile(blob);
+          return;
+        } else {
+          console.warn("Proxy download failed:", await response.text());
+        }
+      } catch (proxyError) {
+        console.warn("Proxy download failed:", proxyError);
+      }
+
+      // Opção 3: Usar o método de link direto como último recurso
+      // Isso não funcionará para imagens com proteção CORS, mas pode funcionar para algumas
       const link = document.createElement('a');
-      link.href = blobUrl;
+      link.href = image.src;
       link.download = `${image.name || 'image'}.${getFileExtension(image.src)}`;
+      link.target = '_blank';
       document.body.appendChild(link);
       link.click();
-
-      // Clean up
       document.body.removeChild(link);
-      URL.revokeObjectURL(blobUrl);
+
+      toast.success(`Redirecionado para download de ${image.name || 'Image'}`);
 
       if (onClick) onClick();
-
-      toast.success(`${image.name || 'Image'} downloaded successfully`);
     } catch (error) {
       console.error("Download error:", error);
       toast.error(error instanceof Error ? error.message : "Failed to download image");
@@ -53,21 +95,48 @@ export const DownloadButton = ({
     }
   };
 
-  // Helper function to get file extension from URL
+  // Função para salvar o arquivo após obter o blob
+  const saveFile = async (blob: Blob) => {
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = `${image.name || 'image'}.${getFileExtension(image.src)}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(blobUrl);
+
+    if (onClick) onClick();
+
+    toast.success(`${image.name || 'Image'} downloaded successfully`);
+  };
+
+  // Tenta obter uma URL alternativa para imagens do Cloudinary
+  const getCloudinaryFallbackUrl = (url: string): string => {
+    // Exemplo: transformar https://res.cloudinary.com/demo/image/upload/v1234/sample.jpg
+    // em https://res.cloudinary.com/demo/image/upload/fl_attachment/v1234/sample.jpg
+    try {
+      const urlParts = url.split('/upload/');
+      if (urlParts.length === 2) {
+        return `${urlParts[0]}/upload/fl_attachment/${urlParts[1]}`;
+      }
+    } catch (e) {
+      console.warn("Error creating Cloudinary fallback URL:", e);
+    }
+    return url;
+  };
+
   const getFileExtension = (url: string): string => {
-    // Try to extract extension from URL path
     const pathMatch = url.split('?')[0].match(/\.([a-zA-Z0-9]+)$/);
     if (pathMatch && pathMatch[1]) {
       return pathMatch[1].toLowerCase();
     }
 
-    // Check content-type in URL if present
     if (url.includes('image/jpeg') || url.includes('image/jpg')) return 'jpg';
     if (url.includes('image/png')) return 'png';
     if (url.includes('image/gif')) return 'gif';
     if (url.includes('image/webp')) return 'webp';
 
-    // Default to jpg if no extension found
     return 'jpg';
   };
 

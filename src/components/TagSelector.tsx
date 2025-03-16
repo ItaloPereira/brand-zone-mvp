@@ -109,7 +109,7 @@ export const TagSelector = ({
                 }}
               >
                 {availableTags.length === 0 && !inputValue.trim()
-                  ? "Add your first tag"
+                  ? "Add your first tag typing above"
                   : `Add "${inputValue.trim()}"`}
               </Button>
             </CommandEmpty>
