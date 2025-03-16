@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
+import { Toaster } from 'sonner';
 
 import Header from "@/components/Header";
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           <Header />
           {children}
         </ClerkProvider>
+        <Toaster position="bottom-right" />
       </body>
     </html>
   );
