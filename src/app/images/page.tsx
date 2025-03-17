@@ -2,6 +2,7 @@ import { getImages } from "@/data/images";
 import { getGroups, getTags } from "@/data/shared";
 
 import ImagesModule from "./_components/ImagesModule";
+import { ImagesProvider } from "./_context/ImagesContext";
 import { getImageFilters } from "./_utils/filters";
 
 interface ImagesPageProps {
@@ -25,12 +26,9 @@ const ImagesPage = async ({ searchParams }: ImagesPageProps) => {
 
   return (
     <main>
-      <ImagesModule
-        images={images}
-        filters={filters}
-        availableGroups={availableGroups}
-        availableTags={availableTags}
-      />
+      <ImagesProvider availableGroups={availableGroups} availableTags={availableTags}>
+        <ImagesModule images={images} filters={filters} />
+      </ImagesProvider>
     </main>
   );
 };

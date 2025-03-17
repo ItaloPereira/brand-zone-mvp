@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorTemplate from '@/components/ErrorTemplate';
+import ErrorTemplate from '@/components/feedback/ErrorTemplate';
 
 const Error = ({
   error,

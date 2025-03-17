@@ -1,4 +1,4 @@
-import GridSkeleton from '@/components/GridSkeleton';
+import GridSkeleton from '@/components/feedback/GridSkeleton';
 
 const ImagesLoading = () => {
   return <GridSkeleton />;

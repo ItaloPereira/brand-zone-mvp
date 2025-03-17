@@ -10,8 +10,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { updateImage } from "@/actions/update-image";
-import { GroupSelector, type GroupValue } from "@/components/GroupSelector";
-import { TagSelector, type TagValue } from "@/components/TagSelector";
+import { GroupSelector, type GroupValue } from "@/components/fields/GroupSelector";
+import { TagSelector, type TagValue } from "@/components/fields/TagSelector";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";

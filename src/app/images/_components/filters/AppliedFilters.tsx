@@ -3,8 +3,8 @@
 import { X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { Badge } from "@/components/ui/badge";
 import { formatAppliedImageFilters } from "@/app/images/_utils/filters";
+import { Badge } from "@/components/ui/badge";
 
 import type { ImageFilters } from "../../types";
 
