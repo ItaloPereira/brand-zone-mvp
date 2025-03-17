@@ -18,7 +18,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-import { useImages } from "../../context/ImagesContext";
+import { useImages } from "../../_context/ImagesContext";
 
 const promptSchema = z.object({
   prompt: z.string().trim().min(1, { message: "Prompt is required" }).max(1000, { message: "Prompt is too long" }),

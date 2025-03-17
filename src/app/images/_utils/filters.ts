@@ -1,9 +1,9 @@
 import { Group, Tag } from "@prisma/client";
 
-import { ImageGroupView, ImageView } from "@/app/images/constants";
-import type { ImageFilters } from "@/app/images/types";
+import type { ImageFilters } from "../types";
+import { ImageGroupView, ImageView } from "./constants";
 
-export interface GetFiltersOptions {
+export interface GetImageFiltersOptions {
   availableGroups?: Group[];
   availableTags?: Tag[];
 }
@@ -25,9 +25,9 @@ export interface GetImagesProps {
   keyword?: string;
 }
 
-export const getFilters = (
+export const getImageFilters = (
   searchParams: { [key: string]: string | string[] | undefined } | URLSearchParams,
-  options: GetFiltersOptions = {}
+  options: GetImageFiltersOptions = {}
 ): ImageFilters => {
   const params = searchParams instanceof URLSearchParams
     ? searchParams
@@ -69,7 +69,7 @@ export const getFilters = (
   };
 };
 
-export const formatAppliedFilters = (filters: ImageFilters) => {
+export const formatAppliedImageFilters = (filters: ImageFilters) => {
   const appliedFilters: { id: string; label: string; type: "keyword" | "group" | "tag" }[] = [];
 
   if (filters.search.keyword) {

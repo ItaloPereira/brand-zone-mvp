@@ -1,4 +1,4 @@
-import { ImageGroupView } from "../../constants";
+import { ImageGroupView } from "../../_utils/constants";
 import type { ImageItem } from "../../types";
 import { GroupHeader } from "../GroupHeader";
 import ImageCardGrid from "../image-cards/ImageCardGrid";

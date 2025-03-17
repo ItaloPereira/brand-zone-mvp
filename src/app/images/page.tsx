@@ -1,8 +1,8 @@
 import { getImages } from "@/data/images";
 import { getGroups, getTags } from "@/data/shared";
-import { getFilters } from "@/utils/images/filters";
 
 import ImagesModule from "./_components/ImagesModule";
+import { getImageFilters } from "./_utils/filters";
 
 interface ImagesPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -12,7 +12,7 @@ const ImagesPage = async ({ searchParams }: ImagesPageProps) => {
   const availableGroups = await getGroups();
   const availableTags = await getTags();
 
-  const filters = getFilters(await searchParams, {
+  const filters = getImageFilters(await searchParams, {
     availableGroups,
     availableTags,
   });

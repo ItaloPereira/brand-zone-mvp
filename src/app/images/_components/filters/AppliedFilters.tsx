@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
-import { formatAppliedFilters } from "@/utils/images/filters";
+import { formatAppliedImageFilters } from "@/app/images/_utils/filters";
 
 import type { ImageFilters } from "../../types";
 
@@ -15,7 +15,7 @@ interface AppliedFiltersProps {
 const AppliedFilters = ({ filters }: AppliedFiltersProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const appliedFilters = formatAppliedFilters(filters);
+  const appliedFilters = formatAppliedImageFilters(filters);
 
   if (!appliedFilters.length) {
     return null;

@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+import { GetImagesProps } from "@/app/images/_utils/filters";
 import { db } from "@/lib/prisma";
-import { GetImagesProps } from "@/utils/images/filters";
 
 export const getImages = async ({ groupId, tagIds, keyword }: GetImagesProps) => {
   try {

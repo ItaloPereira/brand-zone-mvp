@@ -18,7 +18,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-import { useImages } from "../../context/ImagesContext";
+import { useImages } from "../../_context/ImagesContext";
 import type { ImageItem } from "../../types";
 
 const formSchema = z.object({

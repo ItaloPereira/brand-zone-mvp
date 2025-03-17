@@ -1,7 +1,7 @@
 import type { Group, Tag } from "@prisma/client";
 
-import { ImageView } from "../constants";
-import { ImagesProvider } from "../context/ImagesContext";
+import { ImagesProvider } from "../_context/ImagesContext";
+import { ImageView } from "../_utils/constants";
 import type { ImageFilters, ImageItem } from "../types";
 import AddImageButton from "./AddImageButton";
 import AppliedFilters from "./filters/AppliedFilters";

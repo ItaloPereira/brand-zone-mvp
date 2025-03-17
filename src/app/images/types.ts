@@ -1,6 +1,6 @@
 import type { Group, Images, Tag, TagsOnImages } from "@prisma/client";
 
-import { ImageGroupView, ImageView } from "./constants";
+import { ImageGroupView, ImageView } from "./_utils/constants";
 
 export type ImageItem = Images & {
   group: Group | null;

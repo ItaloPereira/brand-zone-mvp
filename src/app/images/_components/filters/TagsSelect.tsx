@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-import { useImages } from "../../context/ImagesContext";
+import { useImages } from "../../_context/ImagesContext";
 
 const TagsSelect = () => {
   const { availableTags } = useImages();
