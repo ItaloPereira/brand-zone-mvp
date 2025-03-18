@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import AddPaletteForm from "../forms/AddPaletteForm";
+import UpsertPaletteForm from "../forms/UpsertPaletteForm";
 
 const AddPaletteButton = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -29,7 +29,7 @@ const AddPaletteButton = () => {
         <DialogHeader>
           <DialogTitle>Add color palette</DialogTitle>
         </DialogHeader>
-        <AddPaletteForm dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
+        <UpsertPaletteForm dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
       </DialogContent>
     </Dialog>
   );

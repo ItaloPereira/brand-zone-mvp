@@ -60,10 +60,8 @@ const UpsertPaletteForm = ({ dialogOpen, setDialogOpen, palette }: UpsertPalette
   const [currentColor, setCurrentColor] = useState("#FFFFFF");
   const isEditMode = !!palette;
 
-  // Initialize default values based on whether we're editing or creating
   const getDefaultValues = useCallback(() => {
     if (palette) {
-      // Edit mode - pre-populate form with palette data
       return {
         id: palette.id,
         name: palette.name,
@@ -82,7 +80,6 @@ const UpsertPaletteForm = ({ dialogOpen, setDialogOpen, palette }: UpsertPalette
       };
     }
 
-    // Create mode - use empty values
     return {
       name: "",
       colors: [],

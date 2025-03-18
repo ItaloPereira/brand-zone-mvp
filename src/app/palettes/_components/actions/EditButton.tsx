@@ -11,7 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-// import EditPaletteForm from "../forms/EditPaletteForm";
+import UpsertPaletteForm from "../forms/UpsertPaletteForm";
 import type { PaletteActionButtonProps } from "./types";
 
 const EditButton = ({
@@ -25,11 +25,8 @@ const EditButton = ({
 
   const handleOpenDialog = () => {
     setIsOpen(true);
+    if (onClick) onClick();
   };
-
-  // const handleDialogClose = () => {
-  //   if (onClick) onClick();
-  // };
 
   return (
     <>
@@ -49,17 +46,16 @@ const EditButton = ({
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit Palette</DialogTitle>
           </DialogHeader>
 
-          {/* <EditImageForm
-            image={image}
+          <UpsertPaletteForm
+            palette={palette}
             dialogOpen={isOpen}
             setDialogOpen={setIsOpen}
-            onSuccess={handleDialogClose}
-          /> */}
+          />
         </DialogContent>
       </Dialog>
     </>

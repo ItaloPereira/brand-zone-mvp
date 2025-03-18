@@ -71,23 +71,47 @@ const DeleteButton = ({
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete Image</DialogTitle>
+            <DialogTitle>Delete Palette</DialogTitle>
             <DialogDescription>
               Are you sure you want to delete the palette &ldquo;{palette.name}&rdquo;? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
 
           <div className="flex justify-center my-4">
-            <div className="relative w-40 h-40 rounded-md overflow-hidden">
-              {/* <Image
-                src={image.src}
-                alt={image.name}
-                fill
-                className="object-cover"
-                sizes="160px"
-                priority
-              /> */}
-            </div>
+            {palette.colors && palette.colors.length > 0 ? (
+              <div className="w-full max-w-md">
+                <div className="h-16 flex overflow-hidden rounded-md shadow-md mb-2">
+                  {palette.colors.map((color, index) => (
+                    <div
+                      key={index}
+                      className="flex-grow h-full"
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-5 gap-2">
+                  {palette.colors.slice(0, 5).map((color, index) => (
+                    <div key={index} className="flex flex-col items-center">
+                      <div
+                        className="h-8 w-8 rounded-md shadow-sm border border-background/20"
+                        style={{ backgroundColor: color }}
+                      />
+                      <span className="text-xs font-mono mt-1 opacity-70">{color.toUpperCase()}</span>
+                    </div>
+                  ))}
+                  {palette.colors.length > 5 && (
+                    <div className="flex items-center justify-center text-xs text-muted-foreground">
+                      +{palette.colors.length - 5} more
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="text-sm text-muted-foreground">
+                This palette has no colors
+              </div>
+            )}
           </div>
 
           <DialogFooter className="flex sm:justify-between">

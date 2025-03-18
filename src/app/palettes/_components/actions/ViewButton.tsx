@@ -60,15 +60,36 @@ const ViewButton = ({
           </DialogHeader>
 
           <div className="flex flex-col gap-6">
-            <div className="relative w-full min-h-[50vh] bg-black/10 rounded-md overflow-hidden">
-              {/* <Image
-                src={palette.src}
-                alt={palette.name}
-                fill
-                className="object-contain"
-                sizes="100vw"
-                priority
-              /> */}
+            <div className="w-full min-h-[50vh] bg-black/10 rounded-md overflow-hidden">
+              {palette.colors && palette.colors.length > 0 ? (
+                <div className="h-full w-full flex flex-col">
+                  <div className="h-2/3 flex overflow-hidden rounded-md">
+                    {palette.colors.map((color, index) => (
+                      <div
+                        key={index}
+                        className="flex-grow h-full transition-all"
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="h-1/3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4 p-6 overflow-y-auto">
+                    {palette.colors.map((color, index) => (
+                      <div key={index} className="flex flex-col items-center gap-2">
+                        <div
+                          className="h-16 w-16 rounded-md shadow-md border border-background/20"
+                          style={{ backgroundColor: color }}
+                        />
+                        <span className="text-sm font-mono">{color.toUpperCase()}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground text-lg">
+                  No colors in this palette
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
