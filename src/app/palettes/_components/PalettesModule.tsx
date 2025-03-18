@@ -13,23 +13,26 @@ import ResourceModule from "@/components/layout/ResourceModule";
 import { Button } from "@/components/ui/button";
 import { useShared } from "@/contexts/SharedContext";
 
-import { ImageGroupView, ImageView } from "../_utils/constants";
-import { AppliedFilter, formatAppliedImageFilters } from "../_utils/filters";
-import type { ImageFilters, ImageItem } from "../types";
-import AddImageButton from "./actions/AddImageButton";
-import ImageGrid from "./image-lists/ImageGrid";
-import ImageList from "./image-lists/ImageList";
-import ImageListDetail from "./image-lists/ImageListDetail";
+import { PaletteGroupView } from "../_utils/constants";
+import { PaletteView } from "../_utils/constants";
+// import { PaletteGroupView, PaletteView } from "../_utils/constants";
+import { AppliedFilter, formatAppliedPaletteFilters } from "../_utils/filters";
+import type { PaletteFilters } from "../types";
+import { PaletteItem } from "../types";
+import AddPaletteButton from "./actions/AddPaletteButton";
+// import ImageGrid from "./image-lists/ImageGrid";
+// import ImageList from "./image-lists/ImageList";
+// import ImageListDetail from "./image-lists/ImageListDetail";
 
-interface ImagesModuleProps {
-  images: ImageItem[];
-  filters: ImageFilters;
+interface PalettesModuleProps {
+  palettes: PaletteItem[];
+  filters: PaletteFilters;
 }
 
-const ImagesModule = ({
-  images,
+const PalettesModule = ({
+  /*palettes,*/
   filters,
-}: ImagesModuleProps) => {
+}: PalettesModuleProps) => {
   const { availableGroups, availableTags } = useShared();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -38,12 +41,12 @@ const ImagesModule = ({
   const defaultTagIds = searchParams.get("tagIds")?.split(",").filter(Boolean) || [];
   const defaultKeyword = searchParams.get("keyword") || "";
 
-  const appliedFilters = formatAppliedImageFilters(filters);
+  const appliedFilters = formatAppliedPaletteFilters(filters);
 
   const getParams = () => new URLSearchParams(searchParams.toString());
 
   const navigateTo = (params: URLSearchParams) => {
-    router.push(`/images?${params.toString()}`);
+    router.push(`/palettes?${params.toString()}`);
   };
 
   const handleApplyGroup = (group: string) => {
@@ -94,13 +97,13 @@ const ImagesModule = ({
     router.push(`/images${params.toString() ? `?${params.toString()}` : ""}`);
   };
 
-  const handleApplyView = (value: ImageView) => {
+  const handleApplyView = (value: PaletteView) => {
     const params = getParams();
     params.set("view", value);
     navigateTo(params);
   };
 
-  const handleApplyGroupView = (value: ImageGroupView) => {
+  const handleApplyGroupView = (value: PaletteGroupView) => {
     const params = getParams();
     params.set("groupView", value);
     navigateTo(params);
@@ -133,35 +136,36 @@ const ImagesModule = ({
   };
 
   const renderImageView = () => {
-    switch (filters.view) {
-      case ImageView.GRID:
-        return <ImageGrid images={images} groupView={filters.groupView} />;
-      case ImageView.LIST:
-        return <ImageList images={images} groupView={filters.groupView} />;
-      case ImageView.DETAILS:
-        return <ImageListDetail images={images} groupView={filters.groupView} />;
-      default:
-        return <ImageGrid images={images} groupView={filters.groupView} />;
-    }
+    // switch (filters.view) {
+    //   case ImageView.GRID:
+    //     return <ImageGrid images={images} groupView={filters.groupView} />;
+    //   case ImageView.LIST:
+    //     return <ImageList images={images} groupView={filters.groupView} />;
+    //   case ImageView.DETAILS:
+    //     return <ImageListDetail images={images} groupView={filters.groupView} />;
+    //   default:
+    //     return <ImageGrid images={images} groupView={filters.groupView} />;
+    // }
+    return <div>Palettes</div>;
   };
 
   const viewOptions = [
-    { value: ImageView.GRID, label: "Grid", icon: <Grid /> },
-    { value: ImageView.LIST, label: "List", icon: <List /> },
-    { value: ImageView.DETAILS, label: "Details", icon: <ListCollapse /> },
+    { value: PaletteView.GRID, label: "Grid", icon: <Grid /> },
+    { value: PaletteView.LIST, label: "List", icon: <List /> },
+    { value: PaletteView.DETAILS, label: "Details", icon: <ListCollapse /> },
   ];
 
   const groupViewOptions = [
-    { value: ImageGroupView.SINGLE, label: "Single" },
-    { value: ImageGroupView.GROUPED, label: "Grouped" },
+    { value: PaletteGroupView.SINGLE, label: "Single" },
+    { value: PaletteGroupView.GROUPED, label: "Grouped" },
   ];
 
   return (
     <ResourceModule
       header={
         <>
-          <h1 className="text-3xl font-bold">Images</h1>
-          <AddImageButton />
+          <h1 className="text-3xl font-bold">Palettes</h1>
+          <AddPaletteButton />
         </>
       }
       filters={
@@ -187,12 +191,12 @@ const ImagesModule = ({
       }
       toggles={
         <>
-          <ToggleGroupView<ImageGroupView>
+          <ToggleGroupView<PaletteGroupView>
             defaultValue={filters.groupView}
             onSelect={handleApplyGroupView}
             options={groupViewOptions}
           />
-          <ToggleView<ImageView>
+          <ToggleView<PaletteView>
             defaultValue={filters.view}
             onSelect={handleApplyView}
             options={viewOptions}
@@ -211,4 +215,4 @@ const ImagesModule = ({
   );
 };
 
-export default ImagesModule;
+export default PalettesModule;

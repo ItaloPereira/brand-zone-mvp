@@ -3,14 +3,14 @@
 import type { Group, Tag } from "@prisma/client";
 import { createContext, ReactNode, useContext } from "react";
 
-interface ImagesContextType {
+interface SharedContextType {
   availableGroups: Group[];
   availableTags: Tag[];
 }
 
-const ImagesContext = createContext<ImagesContextType | undefined>(undefined);
+const SharedContext = createContext<SharedContextType | undefined>(undefined);
 
-export function ImagesProvider({
+export function SharedProvider({
   children,
   availableGroups,
   availableTags,
@@ -20,16 +20,16 @@ export function ImagesProvider({
   availableTags: Tag[];
 }) {
   return (
-    <ImagesContext.Provider value={{ availableGroups, availableTags }}>
+    <SharedContext.Provider value={{ availableGroups, availableTags }}>
       {children}
-    </ImagesContext.Provider>
+    </SharedContext.Provider>
   );
 }
 
-export function useImages() {
-  const context = useContext(ImagesContext);
+export function useShared() {
+  const context = useContext(SharedContext);
   if (context === undefined) {
-    throw new Error("useImages must be used within an ImagesProvider");
+    throw new Error("useShared must be used within an SharedProvider");
   }
   return context;
 } 

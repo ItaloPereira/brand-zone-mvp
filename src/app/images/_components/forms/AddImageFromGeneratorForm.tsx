@@ -17,8 +17,7 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-
-import { useImages } from "../../_context/ImagesContext";
+import { useShared } from "@/contexts/SharedContext";
 
 const promptSchema = z.object({
   prompt: z.string().trim().min(1, { message: "Prompt is required" }).max(1000, { message: "Prompt is too long" }),
@@ -51,7 +50,7 @@ interface AddImageFromGeneratorFormProps {
 }
 
 const AddImageFromGeneratorForm = ({ dialogOpen, setDialogOpen }: AddImageFromGeneratorFormProps) => {
-  const { availableGroups, availableTags } = useImages();
+  const { availableGroups, availableTags } = useShared();
 
   const [clientGroups, setClientGroups] = useState<Group[]>(availableGroups);
   const [clientTags, setClientTags] = useState<Tag[]>(availableTags);

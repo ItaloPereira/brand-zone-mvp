@@ -17,8 +17,8 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useShared } from "@/contexts/SharedContext";
 
-import { useImages } from "../../_context/ImagesContext";
 import type { ImageItem } from "../../types";
 
 const formSchema = z.object({
@@ -47,7 +47,7 @@ interface EditImageFormProps {
 }
 
 const EditImageForm = ({ image, dialogOpen, setDialogOpen, onSuccess }: EditImageFormProps) => {
-  const { availableGroups, availableTags } = useImages();
+  const { availableGroups, availableTags } = useShared();
 
   const [clientGroups, setClientGroups] = useState<Group[]>(availableGroups);
   const [clientTags, setClientTags] = useState<Tag[]>(availableTags);

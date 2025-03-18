@@ -17,8 +17,7 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-
-import { useImages } from "../../_context/ImagesContext";
+import { useShared } from "@/contexts/SharedContext";
 
 const formSchema = z.object({
   url: z.string().trim().min(1, { message: "Image URL is required" }),
@@ -46,7 +45,7 @@ interface AddImageFromUploadFormProps {
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 const AddImageFromUploadForm = ({ dialogOpen, setDialogOpen }: AddImageFromUploadFormProps) => {
-  const { availableGroups, availableTags } = useImages();
+  const { availableGroups, availableTags } = useShared();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [clientGroups, setClientGroups] = useState<Group[]>(availableGroups);

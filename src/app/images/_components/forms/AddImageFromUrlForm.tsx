@@ -16,8 +16,7 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-
-import { useImages } from "../../_context/ImagesContext";
+import { useShared } from "@/contexts/SharedContext";
 
 const formSchema = z.object({
   url: z.string().trim().min(1, { message: "URL is required" }).max(1024, { message: "URL is too long" }).url({ message: "Invalid URL" }),
@@ -43,7 +42,7 @@ interface AddImageFromUrlFormProps {
 }
 
 const AddImageFromUrlForm = ({ dialogOpen, setDialogOpen }: AddImageFromUrlFormProps) => {
-  const { availableGroups, availableTags } = useImages();
+  const { availableGroups, availableTags } = useShared();
 
   const [clientGroups, setClientGroups] = useState<Group[]>(availableGroups);
   const [clientTags, setClientTags] = useState<Tag[]>(availableTags);

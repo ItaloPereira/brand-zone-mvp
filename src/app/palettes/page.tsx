@@ -1,24 +1,24 @@
 import { SharedProvider } from "@/contexts/SharedContext";
-import { getImages } from "@/data/images";
+import { getPalettes } from "@/data/palettes";
 import { getGroups, getTags } from "@/data/shared";
 
-import ImagesModule from "./_components/ImagesModule";
-import { getImageFilters } from "./_utils/filters";
+import PalettesModule from "./_components/PalettesModule";
+import { getPaletteFilters } from "./_utils/filters";
 
-interface ImagesPageProps {
+interface PalettesPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-const ImagesPage = async ({ searchParams }: ImagesPageProps) => {
+const PalettesPage = async ({ searchParams }: PalettesPageProps) => {
   const availableGroups = await getGroups();
   const availableTags = await getTags();
 
-  const filters = getImageFilters(await searchParams, {
+  const filters = getPaletteFilters(await searchParams, {
     availableGroups,
     availableTags,
   });
 
-  const images = await getImages({
+  const palettes = await getPalettes({
     groupId: filters.search.groupId,
     tagIds: filters.search.tagIds,
     keyword: filters.search.keyword,
@@ -27,10 +27,10 @@ const ImagesPage = async ({ searchParams }: ImagesPageProps) => {
   return (
     <main>
       <SharedProvider availableGroups={availableGroups} availableTags={availableTags}>
-        <ImagesModule images={images} filters={filters} />
+        <PalettesModule palettes={palettes} filters={filters} />
       </SharedProvider>
     </main>
   );
 };
 
-export default ImagesPage;
+export default PalettesPage;
