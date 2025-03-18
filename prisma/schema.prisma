@@ -45,7 +45,7 @@ model ColorPalettes {
 
 model Group {
   id        String         @id @default(uuid())
-  name      String         @unique @db.VarChar(100)
+  name      String         @db.VarChar(100)
   userId    String
   images    Images[]
   palettes  ColorPalettes[]
@@ -57,7 +57,7 @@ model Group {
 
 model Tag {
   id        String           @id @default(uuid())
-  name      String           @unique @db.VarChar(100)
+  name      String           @db.VarChar(100)
   userId    String
   images    TagsOnImages[]
   palettes  TagsOnPalettes[]

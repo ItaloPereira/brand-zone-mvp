@@ -1,7 +1,9 @@
+import HomeDashboard from "./_components/HomeDashboard";
+
 const HomePage = async () => {
   return (
     <main>
-      MAIN
+      <HomeDashboard />
     </main>
   );
 }
