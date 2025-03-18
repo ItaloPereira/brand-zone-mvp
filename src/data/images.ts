@@ -17,7 +17,12 @@ export const getImages = async ({ groupId, tagIds, keyword }: GetImagesProps) =>
         userId: userId,
         ...(groupId && { groupId: groupId }),
         ...(tagIds && { tags: { some: { tagId: { in: tagIds } } } }),
-        ...(keyword && { name: { contains: keyword, mode: 'insensitive' } }),
+        ...(keyword && {
+          OR: [
+            { name: { contains: keyword, mode: 'insensitive' } },
+            { comments: { contains: keyword, mode: 'insensitive' } }
+          ]
+        }),
       },
       include: {
         tags: {

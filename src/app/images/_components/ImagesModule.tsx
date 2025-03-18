@@ -1,8 +1,6 @@
 "use client";
 
-import { ListCollapse } from "lucide-react";
-import { List } from "lucide-react";
-import { Grid } from "lucide-react";
+import { Grid, List, ListCollapse } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import GroupSelect from "@/components/filters/GroupSelect";
@@ -42,8 +40,14 @@ const ImagesModule = ({
 
   const appliedFilters = formatAppliedImageFilters(filters);
 
+  const getParams = () => new URLSearchParams(searchParams.toString());
+
+  const navigateTo = (params: URLSearchParams) => {
+    router.push(`/images?${params.toString()}`);
+  };
+
   const handleApplyGroup = (group: string) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = getParams();
 
     if (group === "all") {
       params.delete("groupId");
@@ -51,11 +55,11 @@ const ImagesModule = ({
       params.set("groupId", group);
     }
 
-    router.push(`/images?${params.toString()}`);
-  }
+    navigateTo(params);
+  };
 
   const handleApplyTags = (tags: string[]) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = getParams();
 
     if (tags.length === 0) {
       params.delete("tagIds");
@@ -63,11 +67,11 @@ const ImagesModule = ({
       params.set("tagIds", tags.join(","));
     }
 
-    router.push(`/images?${params.toString()}`);
-  }
+    navigateTo(params);
+  };
 
   const handleSearch = (value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = getParams();
 
     if (value.trim()) {
       params.set("keyword", value.trim());
@@ -75,8 +79,8 @@ const ImagesModule = ({
       params.delete("keyword");
     }
 
-    router.push(`/images?${params.toString()}`);
-  }
+    navigateTo(params);
+  };
 
   const handleClear = () => {
     const params = new URLSearchParams();
@@ -90,20 +94,20 @@ const ImagesModule = ({
     router.push(`/images${params.toString() ? `?${params.toString()}` : ""}`);
   };
 
-  const handleApplyGroupView = (value: ImageGroupView) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("groupView", value);
-    router.push(`/images?${params.toString()}`);
-  }
-
   const handleApplyView = (value: ImageView) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = getParams();
     params.set("view", value);
-    router.push(`/images?${params.toString()}`);
-  }
+    navigateTo(params);
+  };
+
+  const handleApplyGroupView = (value: ImageGroupView) => {
+    const params = getParams();
+    params.set("groupView", value);
+    navigateTo(params);
+  };
 
   const handleRemoveFilter = (filter: AppliedFilter) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = getParams();
 
     switch (filter.type) {
       case "keyword":
@@ -125,8 +129,32 @@ const ImagesModule = ({
       }
     }
 
-    router.push(`/images?${params.toString()}`);
-  }
+    navigateTo(params);
+  };
+
+  const renderImageView = () => {
+    switch (filters.view) {
+      case ImageView.GRID:
+        return <ImageGrid images={images} groupView={filters.groupView} />;
+      case ImageView.LIST:
+        return <ImageList images={images} groupView={filters.groupView} />;
+      case ImageView.DETAILS:
+        return <ImageListDetail images={images} groupView={filters.groupView} />;
+      default:
+        return <ImageGrid images={images} groupView={filters.groupView} />;
+    }
+  };
+
+  const viewOptions = [
+    { value: ImageView.GRID, label: "Grid", icon: <Grid /> },
+    { value: ImageView.LIST, label: "List", icon: <List /> },
+    { value: ImageView.DETAILS, label: "Details", icon: <ListCollapse /> },
+  ];
+
+  const groupViewOptions = [
+    { value: ImageGroupView.SINGLE, label: "Single" },
+    { value: ImageGroupView.GROUPED, label: "Grouped" },
+  ];
 
   return (
     <ResourceModule
@@ -143,18 +171,15 @@ const ImagesModule = ({
             onSelect={handleApplyGroup}
             defaultValue={defaultGroupId}
           />
-
           <TagsSelect
             availableTags={availableTags}
             onSelect={handleApplyTags}
             defaultValue={defaultTagIds}
           />
-
           <SearchInput
             onSearch={handleSearch}
             defaultValue={defaultKeyword}
           />
-
           <Button variant="outline" onClick={handleClear}>
             Clear filters
           </Button>
@@ -165,20 +190,12 @@ const ImagesModule = ({
           <ToggleGroupView<ImageGroupView>
             defaultValue={filters.groupView}
             onSelect={handleApplyGroupView}
-            options={[
-              { value: ImageGroupView.SINGLE, label: "Single" },
-              { value: ImageGroupView.GROUPED, label: "Grouped" },
-            ]}
+            options={groupViewOptions}
           />
-
           <ToggleView<ImageView>
             defaultValue={filters.view}
             onSelect={handleApplyView}
-            options={[
-              { value: ImageView.GRID, label: "Grid", icon: <Grid /> },
-              { value: ImageView.LIST, label: "List", icon: <List /> },
-              { value: ImageView.DETAILS, label: "Details", icon: <ListCollapse /> },
-            ]}
+            options={viewOptions}
           />
         </>
       }
@@ -189,17 +206,9 @@ const ImagesModule = ({
         />
       }
     >
-      {filters.view === ImageView.GRID && (
-        <ImageGrid images={images} groupView={filters.groupView} />
-      )}
-      {filters.view === ImageView.LIST && (
-        <ImageList images={images} groupView={filters.groupView} />
-      )}
-      {filters.view === ImageView.DETAILS && (
-        <ImageListDetail images={images} groupView={filters.groupView} />
-      )}
+      {renderImageView()}
     </ResourceModule>
   );
-}
+};
 
 export default ImagesModule;
