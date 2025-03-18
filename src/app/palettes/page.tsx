@@ -5,6 +5,8 @@ import { getGroups, getTags } from "@/data/shared";
 import PalettesModule from "./_components/PalettesModule";
 import { getPaletteFilters } from "./_utils/filters";
 
+export const dynamic = 'force-dynamic';
+
 interface PalettesPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }

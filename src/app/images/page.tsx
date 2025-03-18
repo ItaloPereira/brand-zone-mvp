@@ -5,6 +5,8 @@ import { getGroups, getTags } from "@/data/shared";
 import ImagesModule from "./_components/ImagesModule";
 import { getImageFilters } from "./_utils/filters";
 
+export const dynamic = 'force-dynamic';
+
 interface ImagesPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
