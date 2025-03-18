@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { deleteImage } from "@/actions/delete-image";
+import { deleteImage } from "@/actions/images/delete-image";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

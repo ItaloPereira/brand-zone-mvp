@@ -8,8 +8,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { createImage } from "@/actions/create-image";
-import { getCloudinarySignature } from "@/actions/get-cloudinary-signature";
+import { createImage } from "@/actions/images/create-image";
+import { getCloudinarySignature } from "@/actions/images/get-cloudinary-signature";
 import { GroupSelector, type GroupValue } from "@/components/fields/GroupSelector";
 import { TagSelector, type TagValue } from "@/components/fields/TagSelector";
 import { Button } from "@/components/ui/button";

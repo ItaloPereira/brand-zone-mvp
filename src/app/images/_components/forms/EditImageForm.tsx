@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { updateImage } from "@/actions/update-image";
+import { updateImage } from "@/actions/images/update-image";
 import { GroupSelector, type GroupValue } from "@/components/fields/GroupSelector";
 import { TagSelector, type TagValue } from "@/components/fields/TagSelector";
 import { Button } from "@/components/ui/button";

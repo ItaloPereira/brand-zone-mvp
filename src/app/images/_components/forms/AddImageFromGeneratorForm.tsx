@@ -8,8 +8,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { createImage } from "@/actions/create-image";
-import { generateImageOpenAI } from "@/actions/generate-image-openai";
+import { createImage } from "@/actions/images/create-image";
+import { generateImageOpenAI } from "@/actions/images/generate-image-openai";
 import { GroupSelector, type GroupValue } from "@/components/fields/GroupSelector";
 import { TagSelector, type TagValue } from "@/components/fields/TagSelector";
 import { Button } from "@/components/ui/button";
