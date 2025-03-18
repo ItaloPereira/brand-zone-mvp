@@ -1,7 +1,8 @@
 "use client";
 
+import { Tag } from "@prisma/client";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -20,16 +21,17 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-import { useImages } from "../../_context/ImagesContext";
+interface TagsSelectProps {
+  availableTags: Tag[];
+  onSelect: (tags: string[]) => void;
+  defaultValue: string[];
+}
 
-const TagsSelect = () => {
-  const { availableTags } = useImages();
-  const router = useRouter();
+const TagsSelect = ({ availableTags, onSelect, defaultValue }: TagsSelectProps) => {
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
 
-  const currentTagIds = searchParams.get("tagIds")?.split(",").filter(Boolean) || [];
-  const [selectedTagIds, setSelectedTagIds] = useState<string[]>(currentTagIds);
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>(defaultValue);
 
   useEffect(() => {
     const tagIds = searchParams.get("tagIds")?.split(",").filter(Boolean) || [];
@@ -48,16 +50,8 @@ const TagsSelect = () => {
   };
 
   const handleApply = () => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (selectedTagIds.length === 0) {
-      params.delete("tagIds");
-    } else {
-      params.set("tagIds", selectedTagIds.join(","));
-    }
-
     setOpen(false);
-    router.push(`/images?${params.toString()}`);
+    onSelect(selectedTagIds);
   };
 
   return (

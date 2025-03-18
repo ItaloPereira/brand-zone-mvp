@@ -5,10 +5,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-import { DialogType } from "../_utils/constants";
-import AddImageFromGeneratorForm from "./forms/AddImageFromGeneratorForm";
-import AddImageFromUploadForm from "./forms/AddImageFromUploadForm";
-import AddImageFromUrlForm from "./forms/AddImageFromUrlForm";
+import { DialogType } from "../../_utils/constants";
+import AddImageFromGeneratorForm from "../forms/AddImageFromGeneratorForm";
+import AddImageFromUploadForm from "../forms/AddImageFromUploadForm";
+import AddImageFromUrlForm from "../forms/AddImageFromUrlForm";
 
 interface AddImageDialogTriggerProps {
   dialogTitle: string;

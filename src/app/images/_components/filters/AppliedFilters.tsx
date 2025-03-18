@@ -1,51 +1,19 @@
 "use client";
 
 import { X } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
 
-import { formatAppliedImageFilters } from "@/app/images/_utils/filters";
 import { Badge } from "@/components/ui/badge";
 
-import type { ImageFilters } from "../../types";
 
-interface AppliedFiltersProps {
-  filters: ImageFilters;
+interface AppliedFiltersProps<T> {
+  appliedFilters: T[];
+  onRemove: (filter: T) => void;
 }
 
-const AppliedFilters = ({ filters }: AppliedFiltersProps) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const appliedFilters = formatAppliedImageFilters(filters);
-
+const AppliedFilters = <T extends { type: string; id: string; label: string }>({ appliedFilters, onRemove }: AppliedFiltersProps<T>) => {
   if (!appliedFilters.length) {
     return null;
   }
-
-  const handleRemove = (type: string, id: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    switch (type) {
-      case "keyword":
-        params.delete("keyword");
-        break;
-      case "group":
-        params.delete("groupId");
-        break;
-      case "tag": {
-        const currentTags = params.get("tagIds")?.split(",").filter(Boolean) || [];
-        const newTags = currentTags.filter(tagId => tagId !== id);
-
-        if (newTags.length === 0) {
-          params.delete("tagIds");
-        } else {
-          params.set("tagIds", newTags.join(","));
-        }
-        break;
-      }
-    }
-
-    router.push(`/images?${params.toString()}`);
-  };
 
   return (
     <div className="flex flex-wrap gap-2">
@@ -57,11 +25,11 @@ const AppliedFilters = ({ filters }: AppliedFiltersProps) => {
         >
           {filter.label}
           <button
-            onClick={() => handleRemove(filter.type, filter.id)}
+            onClick={() => onRemove(filter)}
             className="hover:bg-neutral-700 rounded p-0.5 cursor-pointer"
           >
             <X className="h-3 w-3" />
-            <span className="sr-only">Remove {filter.type} filter</span>
+            <span className="sr-only">Remove {filter.label} filter</span>
           </button>
         </Badge>
       ))}

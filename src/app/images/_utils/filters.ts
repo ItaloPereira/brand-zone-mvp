@@ -69,8 +69,10 @@ export const getImageFilters = (
   };
 };
 
-export const formatAppliedImageFilters = (filters: ImageFilters) => {
-  const appliedFilters: { id: string; label: string; type: "keyword" | "group" | "tag" }[] = [];
+export type AppliedFilter = { id: string; label: string; type: "keyword" | "group" | "tag" };
+
+export const formatAppliedImageFilters = (filters: ImageFilters): AppliedFilter[] => {
+  const appliedFilters: AppliedFilter[] = [];
 
   if (filters.search.keyword) {
     appliedFilters.push({

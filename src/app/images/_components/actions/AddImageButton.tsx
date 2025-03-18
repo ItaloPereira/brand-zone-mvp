@@ -10,7 +10,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { DialogType } from "../_utils/constants";
+import { DialogType } from "../../_utils/constants";
 import AddImageDialogTrigger from "./AddImageDialogTrigger";
 
 const AddImageButton = () => {

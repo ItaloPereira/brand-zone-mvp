@@ -1,7 +1,7 @@
 import { ImageGroupView } from "../../_utils/constants";
 import type { ImageItem } from "../../types";
-import { GroupHeader } from "../GroupHeader";
 import ImageCardListDetail from "../image-cards/ImageCardListDetail";
+import { GroupHeader } from "./GroupHeader";
 
 interface ImageListDetailProps {
   images: ImageItem[];

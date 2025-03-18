@@ -1,35 +1,25 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { KeyboardEvent, useEffect, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 
-const SearchInput = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [value, setValue] = useState(searchParams.get("keyword") || "");
+interface SearchInputProps {
+  onSearch: (value: string) => void;
+  defaultValue: string;
+}
+
+const SearchInput = ({ onSearch, defaultValue }: SearchInputProps) => {
+  const [value, setValue] = useState(defaultValue);
 
   useEffect(() => {
-    setValue(searchParams.get("keyword") || "");
-  }, [searchParams]);
-
-  const handleSearch = () => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (value.trim()) {
-      params.set("keyword", value.trim());
-    } else {
-      params.delete("keyword");
-    }
-
-    router.push(`/images?${params.toString()}`);
-  };
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      handleSearch();
+      onSearch(value);
     }
   };
 

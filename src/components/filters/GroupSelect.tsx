@@ -1,7 +1,7 @@
 "use client";
 
+import { Group } from "@prisma/client";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -20,28 +20,21 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-import { useImages } from "../../_context/ImagesContext";
 
-const GroupSelect = () => {
-  const { availableGroups } = useImages();
-  const router = useRouter();
-  const searchParams = useSearchParams();
+interface GroupSelectProps {
+  availableGroups: Group[];
+  onSelect: (group: string) => void;
+  defaultValue?: string;
+}
+
+const GroupSelect = ({ availableGroups, onSelect, defaultValue }: GroupSelectProps) => {
   const [open, setOpen] = useState(false);
 
-  const currentGroupId = searchParams.get("groupId");
-  const currentGroup = availableGroups.find(group => group.id === currentGroupId);
+  const currentGroup = availableGroups.find(group => group.id === defaultValue);
 
   const handleSelect = (value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (value === "all") {
-      params.delete("groupId");
-    } else {
-      params.set("groupId", value);
-    }
-
     setOpen(false);
-    router.push(`/images?${params.toString()}`);
+    onSelect(value);
   };
 
   return (
@@ -64,7 +57,7 @@ const GroupSelect = () => {
               >
                 <Check className={cn(
                   "mr-2 h-4 w-4",
-                  !currentGroupId ? "opacity-100" : "opacity-0"
+                  !defaultValue ? "opacity-100" : "opacity-0"
                 )} />
                 All groups
               </CommandItem>
@@ -76,7 +69,7 @@ const GroupSelect = () => {
                 >
                   <Check className={cn(
                     "mr-2 h-4 w-4",
-                    currentGroupId === group.id ? "opacity-100" : "opacity-0"
+                    defaultValue === group.id ? "opacity-100" : "opacity-0"
                   )} />
                   {group.name}
                 </CommandItem>
