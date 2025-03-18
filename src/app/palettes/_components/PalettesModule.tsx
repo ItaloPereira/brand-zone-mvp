@@ -15,14 +15,13 @@ import { useShared } from "@/contexts/SharedContext";
 
 import { PaletteGroupView } from "../_utils/constants";
 import { PaletteView } from "../_utils/constants";
-// import { PaletteGroupView, PaletteView } from "../_utils/constants";
 import { AppliedFilter, formatAppliedPaletteFilters } from "../_utils/filters";
 import type { PaletteFilters } from "../types";
 import { PaletteItem } from "../types";
 import AddPaletteButton from "./actions/AddPaletteButton";
-// import ImageGrid from "./image-lists/ImageGrid";
-// import ImageList from "./image-lists/ImageList";
-// import ImageListDetail from "./image-lists/ImageListDetail";
+import PaletteGrid from "./palette-lists/PaletteGrid";
+import PaletteList from "./palette-lists/PaletteList";
+import PaletteListDetail from "./palette-lists/PaletteListDetail";
 
 interface PalettesModuleProps {
   palettes: PaletteItem[];
@@ -30,7 +29,7 @@ interface PalettesModuleProps {
 }
 
 const PalettesModule = ({
-  /*palettes,*/
+  palettes,
   filters,
 }: PalettesModuleProps) => {
   const { availableGroups, availableTags } = useShared();
@@ -135,18 +134,17 @@ const PalettesModule = ({
     navigateTo(params);
   };
 
-  const renderImageView = () => {
-    // switch (filters.view) {
-    //   case ImageView.GRID:
-    //     return <ImageGrid images={images} groupView={filters.groupView} />;
-    //   case ImageView.LIST:
-    //     return <ImageList images={images} groupView={filters.groupView} />;
-    //   case ImageView.DETAILS:
-    //     return <ImageListDetail images={images} groupView={filters.groupView} />;
-    //   default:
-    //     return <ImageGrid images={images} groupView={filters.groupView} />;
-    // }
-    return <div>Palettes</div>;
+  const renderPaletteView = () => {
+    switch (filters.view) {
+      case PaletteView.GRID:
+        return <PaletteGrid palettes={palettes} groupView={filters.groupView} />;
+      case PaletteView.LIST:
+        return <PaletteList palettes={palettes} groupView={filters.groupView} />;
+      case PaletteView.DETAILS:
+        return <PaletteListDetail palettes={palettes} groupView={filters.groupView} />;
+      default:
+        return <PaletteGrid palettes={palettes} groupView={filters.groupView} />;
+    }
   };
 
   const viewOptions = [
@@ -210,7 +208,7 @@ const PalettesModule = ({
         />
       }
     >
-      {renderImageView()}
+      {renderPaletteView()}
     </ResourceModule>
   );
 };

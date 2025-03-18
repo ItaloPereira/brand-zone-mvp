@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 
 import type { ImageItem } from "../../types";
-import { ImageActionButtonGroup } from "../actions/ImageActionButtonGroup";
+import ImageActionButtonGroup from "../actions/ImageActionButtonGroup";
 
 interface ImageCardListProps {
   image: ImageItem;

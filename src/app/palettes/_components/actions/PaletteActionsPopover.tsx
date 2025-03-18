@@ -10,16 +10,15 @@ import {
   PopoverTrigger
 } from "@/components/ui/popover";
 
-import type { ImageItem } from "../../types";
+import type { PaletteItem } from "../../types";
 import DeleteButton from "./DeleteButton";
-import DownloadButton from "./DownloadButton";
 import EditButton from "./EditButton";
 import ViewButton from "./ViewButton";
 
-const ImageActionsPopover = ({
-  image
+const PaletteActionsPopover = ({
+  palette
 }: {
-  image: ImageItem;
+  palette: PaletteItem;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -39,14 +38,13 @@ const ImageActionsPopover = ({
       </PopoverTrigger>
       <PopoverContent className="bg-muted px-0" align="start">
         <div className="flex flex-col">
-          <ViewButton variant="popover" image={image} />
-          <DownloadButton variant="popover" image={image} />
-          <EditButton variant="popover" image={image} />
-          <DeleteButton variant="popover" image={image} />
+          <ViewButton variant="popover" palette={palette} />
+          <EditButton variant="popover" palette={palette} />
+          <DeleteButton variant="popover" palette={palette} />
         </div>
       </PopoverContent>
     </Popover>
   );
 };
 
-export default ImageActionsPopover;
+export default PaletteActionsPopover;

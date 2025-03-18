@@ -11,25 +11,25 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import EditImageForm from "../forms/EditImageForm";
-import type { ImageActionButtonProps } from "./types";
+// import EditPaletteForm from "../forms/EditPaletteForm";
+import type { PaletteActionButtonProps } from "./types";
 
 const EditButton = ({
   variant = "icon",
   size = "icon",
   className = "hover:bg-neutral-600",
   onClick,
-  image
-}: ImageActionButtonProps) => {
+  palette
+}: PaletteActionButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenDialog = () => {
     setIsOpen(true);
   };
 
-  const handleDialogClose = () => {
-    if (onClick) onClick();
-  };
+  // const handleDialogClose = () => {
+  //   if (onClick) onClick();
+  // };
 
   return (
     <>
@@ -51,15 +51,15 @@ const EditButton = ({
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Edit Image</DialogTitle>
+            <DialogTitle>Edit Palette</DialogTitle>
           </DialogHeader>
 
-          <EditImageForm
+          {/* <EditImageForm
             image={image}
             dialogOpen={isOpen}
             setDialogOpen={setIsOpen}
             onSuccess={handleDialogClose}
-          />
+          /> */}
         </DialogContent>
       </Dialog>
     </>

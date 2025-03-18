@@ -1,15 +1,15 @@
-import { ImageGroupView } from "../../_utils/constants";
-import type { ImageItem } from "../../types";
-import ImageCardListDetail from "../image-cards/ImageCardListDetail";
+import { PaletteGroupView } from "../../_utils/constants";
+import type { PaletteItem } from "../../types";
+import PaletteCardListDetail from "../palette-cards/PaletteCardListDetail";
 import GroupHeader from "./GroupHeader";
 
-interface ImageListDetailProps {
-  images: ImageItem[];
-  groupView: ImageGroupView;
+interface PaletteListDetailProps {
+  palettes: PaletteItem[];
+  groupView: PaletteGroupView;
 }
 
-const ImageListDetail = ({ images, groupView }: ImageListDetailProps) => {
-  if (!images.length) {
+const PaletteListDetail = ({ palettes, groupView }: PaletteListDetailProps) => {
+  if (!palettes.length) {
     return (
       <p className="text-muted-foreground text-center px-8 py-6">
         No results found.
@@ -17,12 +17,12 @@ const ImageListDetail = ({ images, groupView }: ImageListDetailProps) => {
     );
   }
 
-  if (groupView !== ImageGroupView.GROUPED) {
+  if (groupView !== PaletteGroupView.GROUPED) {
     return (
       <section className="px-8 py-6">
         <div className="flex flex-col space-y-4">
-          {images.map((image) => (
-            <ImageCardListDetail key={image.id} image={image} />
+          {palettes.map((palette) => (
+            <PaletteCardListDetail key={palette.id} palette={palette} />
           ))}
         </div>
       </section>
@@ -30,21 +30,21 @@ const ImageListDetail = ({ images, groupView }: ImageListDetailProps) => {
   }
 
   // Group images
-  const groups: Record<string, { name: string; images: ImageItem[] }> = {};
-  const ungrouped: ImageItem[] = [];
+  const groups: Record<string, { name: string; images: PaletteItem[] }> = {};
+  const ungrouped: PaletteItem[] = [];
 
-  images.forEach((image) => {
-    if (image.group) {
-      const groupId = image.group.id;
+  palettes.forEach((palette) => {
+    if (palette.group) {
+      const groupId = palette.group.id;
       if (!groups[groupId]) {
         groups[groupId] = {
-          name: image.group.name,
+          name: palette.group.name,
           images: []
         };
       }
-      groups[groupId].images.push(image);
+      groups[groupId].images.push(palette);
     } else {
-      ungrouped.push(image);
+      ungrouped.push(palette);
     }
   });
 
@@ -57,8 +57,8 @@ const ImageListDetail = ({ images, groupView }: ImageListDetailProps) => {
             count={group.images.length}
           />
           <div className="flex flex-col space-y-4">
-            {group.images.map((image) => (
-              <ImageCardListDetail key={image.id} image={image} />
+            {group.images.map((palette) => (
+              <PaletteCardListDetail key={palette.id} palette={palette} />
             ))}
           </div>
         </div>
@@ -70,8 +70,8 @@ const ImageListDetail = ({ images, groupView }: ImageListDetailProps) => {
             count={ungrouped.length}
           />
           <div className="flex flex-col space-y-4">
-            {ungrouped.map((image) => (
-              <ImageCardListDetail key={image.id} image={image} />
+            {ungrouped.map((palette) => (
+              <PaletteCardListDetail key={palette.id} palette={palette} />
             ))}
           </div>
         </div>
@@ -80,4 +80,4 @@ const ImageListDetail = ({ images, groupView }: ImageListDetailProps) => {
   );
 }
 
-export default ImageListDetail;
+export default PaletteListDetail;

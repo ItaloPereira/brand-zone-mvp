@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 import type { ImageActionButtonProps } from "./types";
 
-export const DownloadButton = ({
+const DownloadButton = ({
   variant = "icon",
   size = "icon",
   className = "hover:bg-neutral-600",
@@ -146,4 +146,6 @@ export const DownloadButton = ({
       {variant === "popover" && (isDownloading ? "Downloading..." : "Download")}
     </Button>
   );
-}; 
+};
+
+export default DownloadButton;

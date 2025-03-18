@@ -1,7 +1,6 @@
 'use client';
 
 import { Calendar, Eye, Hash } from "lucide-react";
-import Image from "next/image";
 import { useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -13,15 +12,15 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 
-import type { ImageActionButtonProps } from "./types";
+import type { PaletteActionButtonProps } from "./types";
 
 const ViewButton = ({
   variant = "icon",
   size = "icon",
   className = "hover:bg-neutral-600",
   onClick,
-  image
-}: ImageActionButtonProps) => {
+  palette
+}: PaletteActionButtonProps) => {
   const [open, setOpen] = useState(false);
 
   const handleView = () => {
@@ -57,19 +56,19 @@ const ViewButton = ({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:!max-w-screen-xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold">{image.name}</DialogTitle>
+            <DialogTitle className="text-xl font-bold">{palette.name}</DialogTitle>
           </DialogHeader>
 
           <div className="flex flex-col gap-6">
             <div className="relative w-full min-h-[50vh] bg-black/10 rounded-md overflow-hidden">
-              <Image
-                src={image.src}
-                alt={image.name}
+              {/* <Image
+                src={palette.src}
+                alt={palette.name}
                 fill
                 className="object-contain"
                 sizes="100vw"
                 priority
-              />
+              /> */}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -79,29 +78,29 @@ const ViewButton = ({
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Created:</span>
-                    <span>{formatDate(image.createdAt)}</span>
+                    <span>{formatDate(palette.createdAt)}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Modified:</span>
-                    <span>{formatDate(image.updatedAt)}</span>
+                    <span>{formatDate(palette.updatedAt)}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Hash className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">ID:</span>
-                    <span>{image.id.slice(0, 8)}</span>
+                    <span>{palette.id.slice(0, 8)}</span>
                   </div>
                 </div>
               </div>
 
               <div>
                 <h3 className="text-lg font-semibold mb-2">Group</h3>
-                {image.group ? (
+                {palette.group ? (
                   <Badge
                     variant="secondary"
                     className="px-2 py-0.5 bg-white text-black"
                   >
-                    {image.group.name}
+                    {palette.group.name}
                   </Badge>
                 ) : (
                   <span className="text-sm text-muted-foreground">No group assigned</span>
@@ -109,8 +108,8 @@ const ViewButton = ({
 
                 <h3 className="text-lg font-semibold mb-2 mt-4">Tags</h3>
                 <div className="flex flex-wrap gap-2 overflow-y-auto pr-2">
-                  {image.tags && image.tags.length > 0 ? (
-                    image.tags.map((tagItem) => (
+                  {palette.tags && palette.tags.length > 0 ? (
+                    palette.tags.map((tagItem) => (
                       <Badge
                         key={tagItem.id}
                         variant="outline"
@@ -125,11 +124,11 @@ const ViewButton = ({
                 </div>
               </div>
 
-              {image.comments && (
+              {palette.comments && (
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Comments</h3>
                   <div className="max-h-[300px] overflow-y-auto pr-2 bg-muted/20 p-3 rounded-md">
-                    <p className="text-sm whitespace-pre-wrap">{image.comments}</p>
+                    <p className="text-sm whitespace-pre-wrap">{palette.comments}</p>
                   </div>
                 </div>
               )}

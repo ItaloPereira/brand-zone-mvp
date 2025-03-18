@@ -1,15 +1,15 @@
-import { ImageGroupView } from "../../_utils/constants";
-import type { ImageItem } from "../../types";
-import ImageCardGrid from "../image-cards/ImageCardGrid";
+import { PaletteGroupView } from "../../_utils/constants";
+import type { PaletteItem } from "../../types";
+import PaletteCardGrid from "../palette-cards/PaletteCardGrid";
 import GroupHeader from "./GroupHeader";
 
-interface ImageGridProps {
-  images: ImageItem[];
-  groupView: ImageGroupView;
+interface PaletteGridProps {
+  palettes: PaletteItem[];
+  groupView: PaletteGroupView;
 }
 
-const ImageGrid = ({ images, groupView }: ImageGridProps) => {
-  if (!images.length) {
+const PaletteGrid = ({ palettes, groupView }: PaletteGridProps) => {
+  if (!palettes.length) {
     return (
       <p className="text-muted-foreground text-center px-8 py-6">
         No results found.
@@ -17,12 +17,12 @@ const ImageGrid = ({ images, groupView }: ImageGridProps) => {
     );
   }
 
-  if (groupView !== ImageGroupView.GROUPED) {
+  if (groupView !== PaletteGroupView.GROUPED) {
     return (
       <section className="px-8 py-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {images.map((image) => (
-            <ImageCardGrid key={image.id} image={image} />
+          {palettes.map((palette) => (
+            <PaletteCardGrid key={palette.id} palette={palette} />
           ))}
         </div>
       </section>
@@ -30,21 +30,21 @@ const ImageGrid = ({ images, groupView }: ImageGridProps) => {
   }
 
   // Group images
-  const groups: Record<string, { name: string; images: ImageItem[] }> = {};
-  const ungrouped: ImageItem[] = [];
+  const groups: Record<string, { name: string; images: PaletteItem[] }> = {};
+  const ungrouped: PaletteItem[] = [];
 
-  images.forEach((image) => {
-    if (image.group) {
-      const groupId = image.group.id;
+  palettes.forEach((palette) => {
+    if (palette.group) {
+      const groupId = palette.group.id;
       if (!groups[groupId]) {
         groups[groupId] = {
-          name: image.group.name,
+          name: palette.group.name,
           images: []
         };
       }
-      groups[groupId].images.push(image);
+      groups[groupId].images.push(palette);
     } else {
-      ungrouped.push(image);
+      ungrouped.push(palette);
     }
   });
 
@@ -57,8 +57,8 @@ const ImageGrid = ({ images, groupView }: ImageGridProps) => {
             count={group.images.length}
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {group.images.map((image) => (
-              <ImageCardGrid key={image.id} image={image} />
+            {group.images.map((palette) => (
+              <PaletteCardGrid key={palette.id} palette={palette} />
             ))}
           </div>
         </div>
@@ -70,8 +70,8 @@ const ImageGrid = ({ images, groupView }: ImageGridProps) => {
             count={ungrouped.length}
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {ungrouped.map((image) => (
-              <ImageCardGrid key={image.id} image={image} />
+            {ungrouped.map((palette) => (
+              <PaletteCardGrid key={palette.id} palette={palette} />
             ))}
           </div>
         </div>
@@ -80,4 +80,4 @@ const ImageGrid = ({ images, groupView }: ImageGridProps) => {
   );
 }
 
-export default ImageGrid;
+export default PaletteGrid;

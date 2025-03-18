@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 import type { ImageItem } from "../../types";
-import { ImageActionButtonGroup } from "../actions/ImageActionButtonGroup";
+import ImageActionButtonGroup from "../actions/ImageActionButtonGroup";
 
 interface ImageCardListDetailProps {
   image: ImageItem;

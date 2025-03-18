@@ -1,12 +1,12 @@
 'use client';
 
 import type { ImageItem } from "../../types";
-import { DeleteButton } from "./DeleteButton";
-import { DownloadButton } from "./DownloadButton";
-import { EditButton } from "./EditButton";
-import { ViewButton } from "./ViewButton";
+import DeleteButton from "./DeleteButton";
+import DownloadButton from "./DownloadButton";
+import EditButton from "./EditButton";
+import ViewButton from "./ViewButton";
 
-export const ImageActionButtonGroup = ({
+const ImageActionButtonGroup = ({
   className = "flex items-center gap-2 flex-shrink-0",
   image
 }: {
@@ -21,4 +21,6 @@ export const ImageActionButtonGroup = ({
       <DeleteButton image={image} />
     </div>
   );
-}; 
+};
+
+export default ImageActionButtonGroup;

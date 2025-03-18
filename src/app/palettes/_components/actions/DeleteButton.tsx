@@ -1,11 +1,10 @@
 'use client';
 
 import { Trash } from "lucide-react";
-import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { deleteImage } from "@/actions/images/delete-image";
+import { deletePalette } from "@/actions/palettes/delete-palette";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,15 +15,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import type { ImageActionButtonProps } from "./types";
+import type { PaletteActionButtonProps } from "./types";
 
 const DeleteButton = ({
   variant = "icon",
   size = "icon",
   className = "hover:bg-neutral-600",
   onClick,
-  image
-}: ImageActionButtonProps) => {
+  palette
+}: PaletteActionButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -35,17 +34,17 @@ const DeleteButton = ({
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
-      const result = await deleteImage(image.id);
+      const result = await deletePalette(palette.id);
 
       if (result.success) {
-        toast.success("Image deleted successfully");
+        toast.success("Palette deleted successfully");
         setIsOpen(false);
         if (onClick) onClick();
       } else {
-        toast.error(result.error || "Failed to delete image");
+        toast.error(result.error || "Failed to delete palette");
       }
     } catch (error) {
-      console.error("Error deleting image:", error);
+      console.error("Error deleting palette:", error);
       toast.error("An unexpected error occurred");
     } finally {
       setIsDeleting(false);
@@ -74,20 +73,20 @@ const DeleteButton = ({
           <DialogHeader>
             <DialogTitle>Delete Image</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the image &ldquo;{image.name}&rdquo;? This action cannot be undone.
+              Are you sure you want to delete the palette &ldquo;{palette.name}&rdquo;? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
 
           <div className="flex justify-center my-4">
             <div className="relative w-40 h-40 rounded-md overflow-hidden">
-              <Image
+              {/* <Image
                 src={image.src}
                 alt={image.name}
                 fill
                 className="object-cover"
                 sizes="160px"
                 priority
-              />
+              /> */}
             </div>
           </div>
 
