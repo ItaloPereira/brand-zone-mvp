@@ -9,6 +9,8 @@ Este MVP oferece três módulos principais:
 - **Módulo de Imagens**: gerenciamento completo de imagens, incluindo upload, organização e anotações.
 - **Módulo de Paletas de Cores**: criação e gerenciamento de paletas de cores personalizadas.
 
+> **Nota**: A aplicação foi otimizada para telas com largura superior a 930px. O suporte a telas menores e dispositivos móveis será implementado em versões futuras.
+
 ## Tecnologias Utilizadas
 
 - **Next.js 15**: Framework React com suporte a renderização híbrida e rotas API.
@@ -51,7 +53,7 @@ CLERK_SECRET_KEY=
 # OpenAI - https://platform.openai.com/
 OPENAI_API_KEY=
 
-# Cloudinary - Já configurado no .env.example, mas você pode substituir por sua própria conta
+# Cloudinary - https://cloudinary.com/
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
 NEXT_PUBLIC_CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
