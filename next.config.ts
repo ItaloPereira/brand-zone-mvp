@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '20mb',
     },
-    serverComponentsExternalPackages: ['@prisma/client', 'openai'],
   },
   images: {
     remotePatterns: [
