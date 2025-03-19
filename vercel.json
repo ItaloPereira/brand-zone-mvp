@@ -1,0 +1,17 @@
+{
+  "functions": {
+    "api/*": {
+      "maxDuration": 90
+    },
+    "src/app/**/*": {
+      "maxDuration": 90
+    },
+    "src/**/*": {
+      "maxDuration": 90
+    },
+    ".next/server/**/*": {
+      "maxDuration": 90
+    }
+  },
+  "crons": []
+}

@@ -15,9 +15,6 @@ const nextConfig: NextConfig = {
       }
     ],
   },
-  functions: {
-    maxDuration: 90
-  }
 };
 
 export default nextConfig;
