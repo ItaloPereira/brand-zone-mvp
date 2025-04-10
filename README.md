@@ -24,10 +24,6 @@ Este MVP oferece três módulos principais:
 - **Cloudinary**: Serviço para hospedagem e gerenciamento de imagens.
 - **Jest**: Framework para testes unitários.
 
-## Live Demo
-
-A aplicação está disponível em [brand-zone-mvp.vercel.app](https://brand-zone-mvp.vercel.app)
-
 ## Instalação e Execução
 
 ### Pré-requisitos
